@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-md-12"><h1>Create shift type</h1>
+
+        <div class="form-group">
+            <div class="btn-group">
+                <a ui-sref="shiftTypes" class="btn btn-default back">Shifttypes</a>
+            </div>
+        </div>
+        <form role="form" action="" enctype="multipart/form-data" method="post">
+            <div class="form-group"><label for="form_name">Name</label>
+                <input class="form-control" id="form_name" type="text" name="name" ng-model="shiftTypeEdit.shiftType.name">
+            </div>
+            <div class="form-group">
+                <label for="form_angeltype_id">Angeltype</label>
+                <select class="form-control" id="form_angeltype_id" name="angeltype_id" ng-model="shiftTypeEdit.shiftType.angelType">
+                    <option value="" selected="selected">All</option>
+                    <option value="3">Angel-Type</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="form_description">Description</label>
+                <textarea
+                        class="form-control"
+                        id="form_description"
+                        name="description" ng-model="shiftTypeEdit.shiftType.description">
+
+                </textarea>
+            </div>
+            <span class="help-block">
+                <span class="glyphicon glyphicon-info-sign"></span> Please use markdown for the description.</span>
+
+            <div class="form-group"><label for="">
+                <input class="btn btn-primary" type="submit" name="submit" value="Save"></label>
+            </div>
+        </form>
+    </div>
+</div>

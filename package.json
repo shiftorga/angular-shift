@@ -1,0 +1,58 @@
+{
+  "name": "engelsystem",
+  "version": "0.0.1",
+  "author": "electricmaxxx <maximilian.berghoff@gmx.de",
+  "description": "The engelsystem is an application to display shifts for helper.",
+  "homepage": "https://github.com/muccc/engelsystem.git",
+  "repository": "https://github.com/muccc/engelsystem.git",
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.10.12"
+  },
+  "dependencies": {
+    "bower": "latest"
+  },
+  "devDependencies": {
+    "browserify": "^6.3.2",
+    "jshint": "latest",
+    "karma": "~0.12.0",
+    "karma-cli": "latest",
+    "karma-firefox-launcher": "~0.1.6",
+    "karma-html-reporter": "~0.2.6",
+    "karma-jasmine": "~0.2.0",
+    "karma-phantomjs-launcher": "~0.1.4",
+    "karma-story-reporter": "~0.3.1",
+    "tsd": "^0.6.1",
+    "typescript": "^1.5.0-beta",
+    "uglify-js": "latest"
+  },
+  "config": {
+    "browsers": "Firefox"
+  },
+  "scripts": {
+    "clean": "rm dist/*.*",
+    "lint": "jshint src/*.js",
+    "postinstall": "bower install",
+
+    "pretest": "npm install &&  npm run lint",
+    "test": "karma start tests/karma.conf.js --reporters progress,story --browsers $npm_package_config_browsers",
+
+    "pretest:ci": "npm install && npm run lint",
+    "test:ci": "karma start tests/karma.conf.js --reporters progress,story --browsers $npm_package_config_browsers --single-run",
+
+    "build:tsc": "tsc -m commonjs -t es5 src/*.ts src/*/*.ts src/*/*/*.ts",
+
+    "build:scripts:concatenate": "browserify src/*.js src/*/*.js src/*/*/*.js > dist/angular.shifts.js",
+    "build:scripts:minify": "uglifyjs dist/angular.shifts.js > dist/angular.shifts.min.js --source-map dist/angular.shifts.js.map",
+
+    "prebuild": "npm run build:tsc &&  npm run test  && npm run clean",
+    "build": "npm run build:scripts:concatenate && npm run build:scripts:minify",
+
+    "prebuild:ci": "npm run build:tsc && npm run test:ci",
+    "build:ci": "npm run build:scripts:concatenate && npm run build:scripts:minify"
+  }
+}

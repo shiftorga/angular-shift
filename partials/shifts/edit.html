@@ -1,0 +1,73 @@
+<div class="row" >
+    <div class="col-md-12"><h1>Shifts</h1>
+        <noscript>&lt;div class="alert alert-info"&gt;This page is much more comfortable with
+            javascript.&lt;/div&gt;</noscript>
+        <form role="form" action="" enctype="multipart/form-data" method="post">
+            <div class="form-group">
+                <label for="form_shifttype_id">Shifttype</label>
+                <select class="form-control" id="form_shifttype_id" name="shifttype_id">
+                    <option value="4" selected="selected">Schichttyp1</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="form_title">Title</label>
+                <input class="form-control" id="form_title" type="text" name="title" ng-model="shiftEdit.shift.title">
+            </div>
+            <div class="form-group">
+                <label for="form_rid">Location:</label>
+                    <select class="form-control" id="form_rid" name="rid">
+                        <option value="23" selected="selected">AKJSLJFDS</option>
+                        <option value="16">Bike-shed Green</option>
+                        <option value="15">Bike-shed Red</option>
+                        <option value="18">Bike-shed Yellow</option>
+                        <option value="17">HARcade (valkennest)</option>
+                        <option value="20">Hauptbahnhof - Zeltstadt</option>
+                        <option value="13">Monty Hall</option>
+                        <option value="22">München - Theresienwiese</option>
+                        <option value="24">SDFD</option>
+                        <option value="6">Test</option>
+                        <option value="12">The Birthday Tent</option>
+                        <option value="14">The Two Envelopes Tent</option>
+                        <option value="19">Village BSD</option>
+                    </select>
+            </div>
+            <div class="form-group">
+                <label for="form_start">Start:</label>
+                <input class="form-control" id="form_start" type="text" name="start" ng-model="shiftEdit.shift.start">
+            </div>
+            <div class="form-group">
+                <label for="form_end">End:</label>
+                <input class="form-control" id="form_end" type="text" name="end" ng-model="shiftEdit.shift.end">
+            </div>
+
+            <h2>Needed angels</h2>
+            <div class="form-group" ng-repeat="neededAngelType in shiftEdit.shift.neededAngelTypes">
+                <label for="">{{neededAngelType.angelType.name}}</label>
+                <div class="input-group">
+                    <input id="spinner-type_3" class="form-control" type="text" name="type_3" ng-model="neededAngelType.count">
+                    <div class="input-group-btn">
+                        <button id="spinner-type_3-down" class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                        <button id="spinner-type_3-up" class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $("#spinner-type_3-down").click(function (e) {
+                        $("#spinner-type_3").val(parseInt($("#spinner-type_3").val()) - 1);
+                    });
+                    $("#spinner-type_3-up").click(function (e) {
+                        $("#spinner-type_3").val(parseInt($("#spinner-type_3").val()) + 1);
+                    });
+                </script>
+            </div>
+            <div class="form-group">
+                <label for="">
+                    <input class="btn btn-primary" type="submit" name="submit"value="Save">
+                </label>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1>{{ shiftShow.shift.shiftType.name }}
+            <small class="moment-countdown" data-timestamp="{{ shiftShow.shift.start }}"></small>
+
+        </h1>
+        <div class="form-group">
+            <div class="btn-group">
+                <button class="btn btn-default" ui-sref="shifts.edit({id: shiftShow.shift.SID})">
+                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;edit
+                </button>
+                <button class="btn btn-default" ng-click="shiftShow.deleteShift(shiftShow.shift)">
+                    <span class="glyphicon glyphicon-trash"></span>&nbsp;delete
+                </button>
+                <button class="btn btn-default" ui-sref="shiftType.edit({id: shiftShow.shift.shiftType.id})">
+                    {{ shiftShow.shift.shiftType.name }}
+                </button>
+                <button class="btn btn-default" ui-sref="locations.edit({id: shiftShow.shift.location.id})">
+                    <span class="glyphicon glyphicon-map-marker"></span>&nbsp;{{ shiftShow.shift.location.name }}
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 col-xs-6"><h4>Title</h4>
+            <p class="lead">{{ shiftShow.shift.title}}</p></div>
+            <div class="col-sm-3 col-xs-6"><h4>Start</h4>
+                <p class="lead">
+                    <span class="glyphicon glyphicon-calendar"></span> {{ shiftShow.dateValues.dateStart }}<br>
+                    <span class="glyphicon glyphicon-time"></span> {{ shiftShow.dateValues.timeStart }}
+                </p></div>
+            <div class="col-sm-3 col-xs-6"><h4>End</h4>
+                <p class="lead">
+                    <span class="glyphicon glyphicon-calendar"></span> {{ shiftShow.dateValues.dateEnd }}<br>
+                    <span class="glyphicon glyphicon-time"></span> {{ shiftShow.dateValues.timeEnd }}
+                </p></div>
+            <div class="col-sm-3 col-xs-6"><h4>Location</h4>
+            <p class="lead"><span class="glyphicon glyphicon-map-marker"></span> {{ shiftShow.shift.location.name }}</p></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6"><h2>Needed angels</h2>
+                <div class="list-group">
+                    <div class="list-group-item" ng-repeat="type in shiftShow.shift.neededAngelTypes">
+                        <div class="pull-right">
+                            <a href="?p=user_shifts&amp;shift_id=439&amp;type_id=3" class="btn btn-default">Sign up</a>
+                        </div>
+                        <h3><a href="?p=angeltypes&amp;action=view&amp;angeltype_id=3">{{ type.angelType.name }}</a></h3>
+                        <div
+                                class="progress"
+                                ng-init="min = shiftShow.countShiftEntriesForAngelType(shiftShow.shift, type.id); percentage = shiftShow.getPercentage(min, type.count)"
+                                >
+                            <div
+                                    class="progress-bar {{ (percentage >= 50 ? 'progress-bar-success' : 'progress-bar-danger') }}"
+                                    role="progressbar"
+                                    aria-valuenow="{{ min }}"
+                                    aria-valuemin="0"
+                                    aria-valuemax="{{ type.count }}"
+                                    style="width: {{ percentage }}%">
+                                {{ min }} / {{ type.count }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6"><h2>Description</h2>
+            </div>
+        </div>
+        <span class="glyphicon glyphicon-plus"></span>
+        created at 2015-10-06 07:19 by
+        <a class="" href="?p=users&amp;action=view&amp;user_id=1">
+            <span class="icon-icon_angel"></span> admin
+        </a>
+    </div>
+</div>
