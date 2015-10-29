@@ -1,5 +1,6 @@
 /// <reference path="../_all.ts" />
 
+/// <reference path='shifts_app.ts' />
 /// <reference path='../shiftEntries/ShiftEntriesService.ts' />
 /// <reference path='../shiftEntries/ShiftEntryInterface.ts' />
 /// <reference path='../shiftTypes/ShiftTypeInterface.ts' />

@@ -1,3 +1,5 @@
+/// <reference path='app.ts' />
+
 /// <reference path="../typings/lodash/lodash.d.ts" />
 /// <reference path='../typings/angularjs/angular.d.ts' />
 /// <reference path='../typings/fullCalendar/fullCalendar.d.ts' />
@@ -11,6 +13,7 @@
 /// <reference path='utils/ConfirmationService.ts' />
 /// <reference path='utils/NotificationService.ts' />
 /// <reference path='../typings/moment/moment.d.ts' />
+
 
 
 

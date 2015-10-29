@@ -11,11 +11,7 @@ module.exports = function(config){
             'components/lodash/dist/lodash.min.js',
             'components/restangular/dist/restangular.js',
 
-            'src/app.js',
-            'src/**/*_app.js',
-            'src/**/**/*.js',
-            'src/**/*.js',
-            'src/*.js',
+            'dist/angular.shifts.js',
 
             'tests/fakeApi/*.js',
 
