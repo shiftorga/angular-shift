@@ -1,10 +1,12 @@
 {
-  "name": "engelsystem",
+  "name": "angular-shift",
   "version": "0.0.1",
-  "author": "electricmaxxx <maximilian.berghoff@gmx.de",
+  "authors": [
+    "electricmaxxx <maximilian.berghoff@mayflower.de>"
+  ],
+  "repository": "https://github.com/shiftorga/angular-shift.git",
   "description": "The engelsystem is an application to display shifts for helper.",
-  "homepage": "https://github.com/muccc/engelsystem.git",
-  "repository": "https://github.com/muccc/engelsystem.git",
+  "homepage": "https://github.com/shiftorga/angular-shift.git",
   "licenses": [
     {
       "type": "MIT"
