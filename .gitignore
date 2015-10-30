@@ -7,5 +7,3 @@ components/
 /src/**/*.map
 /src/*.js
 /src/*.map
-tests/unit/**/*.js
-tests/unit/**/*.map

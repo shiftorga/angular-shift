@@ -46,6 +46,7 @@
                 paths.bower + '/jquery/dist/jquery.js',
                 paths.bower + '/jquery-ui/jquery-ui.js',
                 paths.bower + '/angular/angular.js',
+                paths.bower + '/angular-mocks/angular-mocks.js',
                 paths.bower + '/angular-ui-router/release/angular-ui-router.js',
                 paths.bower + '/angular-bootstrap/ui-boostrap.js',
                 paths.bower + '/angular-moment/angular-moment.js',
@@ -91,6 +92,7 @@
             .pipe(uglifyjs())
             .pipe(gulp.dest(paths.dest));
     });
+
     function runKarma(configFilePath, options, cb) {
         gulp.start('build-scripts');
         configFilePath = path.resolve(configFilePath);
@@ -109,6 +111,7 @@
             process.exit(exitCode);
         });
     }
+
     /** single run */
     gulp.task('test', function(cb) {
         runKarma('tests/karma.conf.js', {
@@ -119,7 +122,7 @@
 
     /** continuous ... using karma to watch (feel free to circumvent that;) */
     gulp.task('test-dev', function(cb) {
-        runKarma('tests /karma.conf.js', {
+        runKarma('tests/karma.conf.js', {
             autoWatch: true,
             singleRun: false
         }, cb);

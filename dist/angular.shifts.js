@@ -950,6 +950,26 @@ var angularShift;
 (function (angularShift) {
     var shifts;
     (function (shifts) {
+        angular.module('angularShift.shifts')
+            .directive('listFilter', function () {
+            return {
+                'restrict': 'E',
+                'templateUrl': 'partials/shifts/list_filter.html',
+                'scope': {
+                    type: '@'
+                },
+                link: function ($scope, element, attr) {
+                },
+                'controller': 'ListFilterController'
+            };
+        });
+    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path="../_all.ts" />
+var angularShift;
+(function (angularShift) {
+    var shifts;
+    (function (shifts) {
         var ListFilterController = (function () {
             function ListFilterController($scope, locationsService) {
                 this.services = {
@@ -973,25 +993,5 @@ var angularShift;
         shifts.ListFilterController = ListFilterController;
         ListFilterController.$inject = ['$scope', 'LocationsService'];
         angular.module('angularShift.shifts').controller('ListFilterController', ListFilterController);
-    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
-})(angularShift || (angularShift = {}));
-/// <reference path="../_all.ts" />
-var angularShift;
-(function (angularShift) {
-    var shifts;
-    (function (shifts) {
-        angular.module('angularShift.shifts')
-            .directive('listFilter', function () {
-            return {
-                'restrict': 'E',
-                'templateUrl': 'partials/shifts/list_filter.html',
-                'scope': {
-                    type: '@'
-                },
-                link: function ($scope, element, attr) {
-                },
-                'controller': 'ListFilterController'
-            };
-        });
     })(shifts = angularShift.shifts || (angularShift.shifts = {}));
 })(angularShift || (angularShift = {}));
