@@ -30,20 +30,7 @@
         },
         applicationPaths = {
             scss: [],
-            typescripts: [
-                paths.src + '/shfitEntries/shfitEntries_app.ts',
-                paths.src + '/shfitTypes/shfitTypes_app.ts',
-                paths.src + '/shifts/shifts_app.ts',
-                paths.src + '/locations/locations_app.ts',
-                paths.src + '/app.ts',
-                paths.src + '/locations/!(locations_app)*.ts',
-                paths.src + '/nededAngels/!(shiftAngels_app)*.ts',
-                paths.src + '/shiftEntries/!(shiftEntries_app)*.ts',
-                paths.src + '/shifts/!(shifts_app)*.ts',
-                paths.src + '/shifts/**/*.ts',
-                paths.src + '/shiftTypes/!(shiftTypes_app)*.ts',
-                paths.src + '/utils/*.ts'
-            ]
+            typescripts: ['./src/**/**.ts', './src/**/*.ts' ,'./src/*.ts']
         },
         bowerComponentPaths = {
             scss: [
@@ -51,30 +38,29 @@
                 paths.bower + '/angular-toastr/dist/angular-toastr.css',
                 paths.bower + '/ladda/dist/ladda-themeless.min.css',
                 paths.bower + '/select2/select2.css',
-                paths.bower + '/select2-bootstrap-css/select2-bootstrap.css'
+                paths.bower + '/select2-bootstrap-css/select2-bootstrap.css',
+                paths.bower + '/fullcalendar/dist/fullcalendar.css'
             ],
             // keep in mind that the order of the components is important
             javascripts: [
+                paths.bower + '/jquery/dist/jquery.js',
+                paths.bower + '/jquery-ui/jquery-ui.js',
                 paths.bower + '/angular/angular.js',
                 paths.bower + '/angular-ui-router/release/angular-ui-router.js',
                 paths.bower + '/angular-bootstrap/ui-boostrap.js',
                 paths.bower + '/angular-moment/angular-moment.js',
                 paths.bower + '/angular-toastr/dist/angular-toastr.js',
-                paths.bower  + '/angular-ui-calendar/src/calendar.js',
+                paths.bower + '/angular-ui-calendar/src/calendar.js',
+                paths.bower + '/moment/moment.js',
+                paths.bower + '/angular-moment/angular-moment.js',
                 paths.bower + '/bootbox/bootbox.js',
                 paths.bower + '/bootstrap/dist/js/bootstrap.js',
+                paths.bower + '/angular-bootstrap/ui-bootstrap-tpls.js',
                 paths.bower + '/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
                 paths.bower + '/bootstrap-multiselect/dist/js/bootstrap-multiselect.js',
-                paths.bower +  '/bootstrap-multiselect/dist/js/bootstrap-multiselect.js',
-                paths.bower + '/jquery/dist/jquery.js',
-                paths.bower + '/jquery-ui/jquery-ui.js',
                 paths.bower + '/lodash/dist/lodash.js',
-                paths.bower + '/lodash/dist/lodash.js',
-                paths.bower + '/angular-bootstrap/ui-bootstrap-tpls.js',
                 paths.bower + '/restangular/dist/restangular.js',
-                paths.bower + '/moment/moment.js',
-                paths.bower +
-                paths.bower + '/angular-moment/angular-moment.js',,
+                paths.bower + '/fullcalendar/dist/fullcalendar.js'
             ]
 };
 
@@ -96,9 +82,9 @@
 
 
     gulp.task('build-scripts', function () {
-        var tsResult = gulp.src(['./src/**/***.ts', './src/**/*.ts' ,'./src/*.ts'])
+        var tsResult = gulp.src(applicationPaths.typescripts)
             .pipe(sourcemaps.init())
-            .pipe(ts({out: 'angular.shifts.js', sortOutput: true}))
+            .pipe(ts({out: 'angular.shifts.js'}))
             .pipe(gulp.dest(paths.dest))
             .pipe(sourcemaps.write())
             .pipe(rename('angular.shifts.min.js'))
@@ -161,7 +147,7 @@
             .pipe(gulp.dest(paths.dest + '/css/'));
     });
 
-    gulp.task('bower_components', function() {
+    gulp.task('components', function() {
         // CSS und SCSS files
         var javascripts;
         gulp.src((bowerComponentPaths.scss))
@@ -182,7 +168,7 @@
         javascripts = gulp.src(bowerComponentPaths.javascripts)
             .pipe(sourcemaps.init())
             .pipe(concat("vendors.js"))
-            .pipe(uglifyjs())
+            //.pipe(uglifyjs())
             .pipe(gulp.dest(paths.dest));
     });
 

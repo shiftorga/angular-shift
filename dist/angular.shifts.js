@@ -1,3 +1,4 @@
+/// <reference path="../_all.ts" />
 /// <reference path='_all.ts' />
 /**
  * The main application file
@@ -8,173 +9,70 @@
  */
 var angularShift;
 (function (angularShift) {
-    'use strict';
-    angular
-        .module('angularShift', [
-        'restangular',
-        'angularShift.shifts',
-        'angularShift.shiftEntries',
-        'angularShift.locations',
-        'angularShift.shiftTypes',
-        'angularShift.utils.notification',
-        'angularShift.utils.Confirmation',
-        'ui.router',
-        'toastr'
-    ])
-        .config(function (RestangularProvider) {
-        RestangularProvider.setEncodeIds(false);
-        RestangularProvider.setBaseUrl('api');
-    })
-        .config(function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise("/user_shifts/calendar");
-    });
-})(angularShift || (angularShift = {}));
-/// <reference path='../_all.ts' />
-var angularShift;
-(function (angularShift) {
-    var utils;
-    (function (utils) {
-        var ConfirmationService = (function () {
-            function ConfirmationService($q) {
-                this.$q = $q;
-            }
-            ConfirmationService.prototype.confirm = function (values, successCb) {
-                var defaultValues = {
-                    title: 'Confirm',
-                    message: 'Do you really want to continue?',
-                    buttons: {
-                        cancel: {
-                            label: 'Cancel',
-                            className: 'btn',
-                            callback: function () {
-                                return false;
-                            }
-                        },
-                        confirm: {
-                            label: 'OK',
-                            className: 'btn btn-primary',
-                            callback: successCb
-                        }
-                    }
-                };
-                if (_.isObject(values)) {
-                    _.merge(defaultValues, values);
-                }
-                return this.$q(function (resolve, reject) {
-                    defaultValues.callback = function (result) {
-                        resolve(result);
-                    };
-                    return bootbox.dialog(defaultValues);
-                });
-            };
-            return ConfirmationService;
-        })();
-        utils.ConfirmationService = ConfirmationService;
-        ConfirmationService.$inject = ['$q'];
+    var shiftTypes;
+    (function (shiftTypes) {
+        'use strict';
         angular
-            .module('angularShift.utils.Confirmation', [])
-            .service('ConfirmationService', ConfirmationService);
-    })(utils = angularShift.utils || (angularShift.utils = {}));
+            .module('angularShift.shiftTypes', [])
+            .config(function ($stateProvider) {
+            $stateProvider
+                .state({
+                name: 'shiftType',
+                url: '/shift_type',
+                abstract: true,
+                views: { content: { templateUrl: "partials/shifts/shifts.html" } }
+            })
+                .state({
+                name: 'shiftType.edit',
+                url: "/edit/{id:int}",
+                views: {
+                    edit: {
+                        templateUrl: "partials/shifts/shift_type_edit.html",
+                        controller: "ShiftTypeEditController",
+                        controllerAs: 'shiftTypeEdit'
+                    }
+                }
+            });
+        });
+    })(shiftTypes = angularShift.shiftTypes || (angularShift.shiftTypes = {}));
 })(angularShift || (angularShift = {}));
-/// <reference path='../_all.ts' />
+/// <reference path="../_all.ts" />
+/// <reference path='_all.ts' />
+/**
+ * The main application file
+ *
+ * @todo Remove cause its a lib
+ *
+ * @type {angular.Module}
+ */
 var angularShift;
 (function (angularShift) {
-    var utils;
-    (function (utils) {
-        var NotificationService = (function () {
-            function NotificationService(toastr) {
-                this.toastr = toastr;
-                this.toastrConfig = {
-                    tapToDismiss: true,
-                    closeButton: true,
-                    timeOut: 5000,
-                    extendedTimeOut: 0,
-                    allowHtml: true
-                };
-            }
-            /**
-             * Display a success message
-             *
-             * @param {string} title
-             * @param {string} message
-             * @param {object|undefined} customConfig
-             */
-            NotificationService.prototype.success = function (title, message, customConfig) {
-                if (customConfig === void 0) { customConfig = {}; }
-                this.showToastrMessage('success', title, message, customConfig);
-            };
-            /**
-             * Display a info message
-             *
-             * @param {string} title
-             * @param {string} message
-             * @param {object|undefined} customConfig
-             */
-            NotificationService.prototype.info = function (title, message, customConfig) {
-                if (customConfig === void 0) { customConfig = {}; }
-                this.showToastrMessage('info', title, message, customConfig);
-            };
-            /**
-             * Display a error message
-             *
-             * @param {string} title
-             * @param {string} message
-             * @param {object|undefined} customConfig
-             */
-            NotificationService.prototype.error = function (title, message, customConfig) {
-                if (customConfig === void 0) { customConfig = {}; }
-                this.showToastrMessage('error', title, message, customConfig);
-            };
-            /**
-             * Display a warning message
-             *
-             * @param {string} title
-             * @param {string} message
-             * @param {object|undefined} customConfig
-             */
-            NotificationService.prototype.warning = function (title, message, customConfig) {
-                if (customConfig === void 0) { customConfig = {}; }
-                this.showToastrMessage('warning', title, message, customConfig);
-            };
-            /**
-             * Enrich the toastr call with the predefined toastr config
-             *
-             * @param {string} method
-             * @param {string} title
-             * @param {string} message
-             * @param {object|null} customConfig
-             */
-            NotificationService.prototype.showToastrMessage = function (method, title, message, customConfig) {
-                if (customConfig === void 0) { customConfig = {}; }
-                customConfig = customConfig || {};
-                var config = angular.extend(this.toastrConfig, customConfig);
-                if (false === angular.isFunction(this.toastr[method])) {
-                    throw method + ' is not a toastr method';
-                }
-                this.toastr[method](message, title, config);
-            };
-            return NotificationService;
-        })();
-        utils.NotificationService = NotificationService;
-        NotificationService.$inject = ['toastr'];
-        var app = angular.module('angularShift.utils.notification', []);
-        app.service('NotificationService', NotificationService);
-    })(utils = angularShift.utils || (angularShift.utils = {}));
+    var shiftEntries;
+    (function (shiftEntries) {
+        'use strict';
+        angular
+            .module('angularShift.shiftEntries', []);
+    })(shiftEntries = angularShift.shiftEntries || (angularShift.shiftEntries = {}));
 })(angularShift || (angularShift = {}));
-/// <reference path='app.ts' />
-/// <reference path="../typings/lodash/lodash.d.ts" />
-/// <reference path='../typings/angularjs/angular.d.ts' />
-/// <reference path='../typings/fullCalendar/fullCalendar.d.ts' />
-/// <reference path='../typings/restangular/restangular.d.ts' />
-/// <reference path='../typings/toastr/toastr.d.ts' />
-/// <reference path='../typings/bootstrap/bootstrap.d.ts' />
-/// <reference path='../typings/angular-ui-router/angular-ui-router.d.ts' />
-/// <reference path='../typings/es6-promise/es6-promise.d.ts' />
-/// <reference path='../typings/jquery/jquery.d.ts' />
-/// <reference path='../typings/bootbox/bootbox.d.ts' />
-/// <reference path='utils/ConfirmationService.ts' />
-/// <reference path='utils/NotificationService.ts' />
-/// <reference path='../typings/moment/moment.d.ts' />
+/// <reference path="../_all.ts" />
+/// <reference path='_all.ts' />
+/**
+ * The main application file
+ *
+ * @todo Remove cause its a lib
+ *
+ * @type {angular.Module}
+ */
+var angularShift;
+(function (angularShift) {
+    var neededAngels;
+    (function (neededAngels) {
+        'use strict';
+        angular
+            .module('angularShift.neededAngels', []);
+    })(neededAngels = angularShift.neededAngels || (angularShift.neededAngels = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path="../_all.ts" />
 /// <reference path='_all.ts' />
 /**
  * The main application file
@@ -212,6 +110,97 @@ var angularShift;
         });
     })(locations = angularShift.locations || (angularShift.locations = {}));
 })(angularShift || (angularShift = {}));
+/// <reference path="../_all.ts" />
+/// <reference path='_all.ts' />
+/**
+ * The main application file
+ *
+ * @todo Remove cause its a lib
+ *
+ * @type {angular.Module}
+ */
+var angularShift;
+(function (angularShift) {
+    var shifts;
+    (function (shifts) {
+        'use strict';
+        angular
+            .module('angularShift.shifts', ['ui.calendar', 'ui.router'])
+            .config(function ($stateProvider) {
+            $stateProvider
+                .state({
+                name: 'shifts',
+                url: '/user_shifts',
+                abstract: true,
+                views: { content: { templateUrl: "partials/shifts/shifts.html" } }
+            })
+                .state({
+                name: 'shifts.calendar',
+                url: "/calendar",
+                views: {
+                    main: {
+                        templateUrl: "partials/shifts/calendar.html",
+                        controller: "ShiftsOnCalendarController",
+                        controllerAs: 'shiftsOnCalendar'
+                    }
+                }
+            })
+                .state({
+                name: 'shifts.show',
+                url: "/show/{id}",
+                views: {
+                    main: {
+                        templateUrl: "partials/shifts/show.html",
+                        controller: "ShiftsShowController",
+                        controllerAs: 'shiftShow'
+                    }
+                }
+            })
+                .state({
+                name: 'shifts.edit',
+                url: "/edit/{id:int}",
+                views: {
+                    edit: {
+                        templateUrl: "partials/shifts/edit.html",
+                        controller: "ShiftsEditController",
+                        controllerAs: 'shiftEdit'
+                    }
+                }
+            });
+        });
+    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path='_all.ts' />
+/**
+ * The main application file
+ *
+ * @todo Remove cause its a lib
+ *
+ * @type {angular.Module}
+ */
+var angularShift;
+(function (angularShift) {
+    'use strict';
+    angular
+        .module('angularShift', [
+        'restangular',
+        'angularShift.shifts',
+        'angularShift.shiftEntries',
+        'angularShift.locations',
+        'angularShift.shiftTypes',
+        'angularShift.utils.notification',
+        'angularShift.utils.Confirmation',
+        'ui.router',
+        'toastr'
+    ])
+        .config(function (RestangularProvider) {
+        RestangularProvider.setEncodeIds(false);
+        RestangularProvider.setBaseUrl('api');
+    })
+        .config(function ($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise("/user_shifts/calendar");
+    });
+})(angularShift || (angularShift = {}));
 /// <reference path='_all.ts' />
 var angularShift;
 (function (angularShift) {
@@ -221,6 +210,44 @@ var angularShift;
     })(locations = angularShift.locations || (angularShift.locations = {}));
 })(angularShift || (angularShift = {}));
 ;
+/// <reference path='_all.ts' />
+var angularShift;
+(function (angularShift) {
+    var locations;
+    (function (locations) {
+        var LocationEditController = (function () {
+            function LocationEditController(notificationService, $state, service) {
+                this.notificationService = notificationService;
+                this.$state = $state;
+                this.service = service;
+                this.init();
+            }
+            /**
+             * ToDos
+             * - get shift types list by service
+             * - get locations list by service
+             * - start/end -> form type with day + time
+             * - needed Angeltypes in directive
+             * - save on click
+             */
+            LocationEditController.prototype.init = function () {
+                var _this = this;
+                var locationId = this.$state.params.id;
+                this.notificationService.warning('WORK IN PROGRESS', 'This feature isn`t implemented yet. Use <a href="/?p=user_shifts&edit_shift=' + locationId + '">Link (edit location)</a> instead');
+                this.service.getById(locationId).then(function (location) {
+                    _this.location = location;
+                    _this.notificationService.success('SUCCESS', 'Successfully loaded resource ' + location.Name);
+                }, function (error) {
+                    _this.notificationService.error('ERROR', 'Not able to fetch resource');
+                });
+            };
+            return LocationEditController;
+        })();
+        locations.LocationEditController = LocationEditController;
+        LocationEditController.$inject = ['NotificationService', '$state', 'LocationsService'];
+        angular.module('angularShift.shifts').controller('LocationEditController', LocationEditController);
+    })(locations = angularShift.locations || (angularShift.locations = {}));
+})(angularShift || (angularShift = {}));
 /// <reference path='_all.ts' />
 var angularShift;
 (function (angularShift) {
@@ -291,97 +318,7 @@ var angularShift;
     })(locations = angularShift.locations || (angularShift.locations = {}));
 })(angularShift || (angularShift = {}));
 /// <reference path='../_all.ts' />
-/// <reference path='_all.ts' />
-/**
- * The main application file
- *
- * @todo Remove cause its a lib
- *
- * @type {angular.Module}
- */
-var angularShift;
-(function (angularShift) {
-    var shifts;
-    (function (shifts) {
-        'use strict';
-        angular
-            .module('angularShift.shifts', ['ui.calendar', 'ui.router'])
-            .config(function ($stateProvider) {
-            $stateProvider
-                .state({
-                name: 'shifts',
-                url: '/user_shifts',
-                abstract: true,
-                views: { content: { templateUrl: "partials/shifts/shifts.html" } }
-            })
-                .state({
-                name: 'shifts.calendar',
-                url: "/calendar",
-                views: {
-                    main: {
-                        templateUrl: "partials/shifts/calendar.html",
-                        controller: "ShiftsOnCalendarController",
-                        controllerAs: 'shiftsOnCalendar'
-                    }
-                }
-            })
-                .state({
-                name: 'shifts.show',
-                url: "/show/{id}",
-                views: {
-                    main: {
-                        templateUrl: "partials/shifts/show.html",
-                        controller: "ShiftsShowController",
-                        controllerAs: 'shiftShow'
-                    }
-                }
-            })
-                .state({
-                name: 'shifts.edit',
-                url: "/edit/{id:int}",
-                views: {
-                    edit: {
-                        templateUrl: "partials/shifts/edit.html",
-                        controller: "ShiftsEditController",
-                        controllerAs: 'shiftEdit'
-                    }
-                }
-            });
-        });
-    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
-})(angularShift || (angularShift = {}));
-/// <reference path='_all.ts' />
-/**
- * The main application file
- *
- * @todo Remove cause its a lib
- *
- * @type {angular.Module}
- */
-var angularShift;
-(function (angularShift) {
-    var shiftEntries;
-    (function (shiftEntries) {
-        'use strict';
-        angular
-            .module('angularShift.shiftEntries', []);
-    })(shiftEntries = angularShift.shiftEntries || (angularShift.shiftEntries = {}));
-})(angularShift || (angularShift = {}));
-/// <reference path='_all.ts' />
-var angularShift;
-(function (angularShift) {
-    var shiftEntries;
-    (function (shiftEntries) {
-        ;
-    })(shiftEntries = angularShift.shiftEntries || (angularShift.shiftEntries = {}));
-})(angularShift || (angularShift = {}));
-;
-/// <reference path="../_all.ts" />
-/// <reference path='shfitEntries_app.ts' />
-/// <reference path='ShiftEntriesService.ts' />
-/// <reference path='ShiftEntryInterface.ts' />
-/// <reference path='../shifts/models/ShiftInterface.ts' />
-/// <reference path='../neededAngels/models/AngelTypeInterface.ts' />
+/// <reference path='../_all.ts' />
 /// <reference path='_all.ts' />
 var angularShift;
 (function (angularShift) {
@@ -452,155 +389,13 @@ var angularShift;
     })(shiftEntries = angularShift.shiftEntries || (angularShift.shiftEntries = {}));
 })(angularShift || (angularShift = {}));
 /// <reference path='_all.ts' />
-/**
- * The main application file
- *
- * @todo Remove cause its a lib
- *
- * @type {angular.Module}
- */
 var angularShift;
 (function (angularShift) {
-    var shiftTypes;
-    (function (shiftTypes) {
-        'use strict';
-        angular
-            .module('angularShift.shiftTypes', [])
-            .config(function ($stateProvider) {
-            $stateProvider
-                .state({
-                name: 'shiftType',
-                url: '/shift_type',
-                abstract: true,
-                views: { content: { templateUrl: "partials/shifts/shifts.html" } }
-            })
-                .state({
-                name: 'shiftType.edit',
-                url: "/edit/{id:int}",
-                views: {
-                    edit: {
-                        templateUrl: "partials/shifts/shift_type_edit.html",
-                        controller: "ShiftTypeEditController",
-                        controllerAs: 'shiftTypeEdit'
-                    }
-                }
-            });
-        });
-    })(shiftTypes = angularShift.shiftTypes || (angularShift.shiftTypes = {}));
+    var shiftEntries;
+    (function (shiftEntries) {
+        ;
+    })(shiftEntries = angularShift.shiftEntries || (angularShift.shiftEntries = {}));
 })(angularShift || (angularShift = {}));
-/// <reference path='_all.ts' />
-var angularShift;
-(function (angularShift) {
-    var shifts;
-    (function (shifts) {
-        var ShiftTypeEditController = (function () {
-            function ShiftTypeEditController(notificationService, $state, service) {
-                this.notificationService = notificationService;
-                this.$state = $state;
-                this.service = service;
-                this.init();
-            }
-            /**
-             * ToDos
-             * - get shift types list by service
-             * - get locations list by service
-             * - start/end -> form type with day + time
-             * - needed Angeltypes in directive
-             * - save on click
-             */
-            ShiftTypeEditController.prototype.init = function () {
-                var _this = this;
-                var shiftTypeId = this.$state.params.id;
-                this.notificationService.warning('WORK IN PROGRESS', 'This feature isn`t implemented yet. Use <a href="/?p=user_shifts&edit_shift=' + shiftTypeId + '">Link (edit shift type)</a> instead');
-                this.service.getById(shiftTypeId).then(function (shiftType) {
-                    _this.shiftType = shiftType;
-                    _this.notificationService.success('SUCCESS', 'Successfully loaded resource ' + shiftType.name);
-                }, function (error) {
-                    _this.notificationService.error('ERROR', 'Not able to fetch resource');
-                });
-            };
-            return ShiftTypeEditController;
-        })();
-        shifts.ShiftTypeEditController = ShiftTypeEditController;
-        ShiftTypeEditController.$inject = ['NotificationService', '$state', 'ShiftTypesService'];
-        angular.module('angularShift.shifts').controller('ShiftTypeEditController', ShiftTypeEditController);
-    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
-})(angularShift || (angularShift = {}));
-/// <reference path='_all.ts' />
-var angularShift;
-(function (angularShift) {
-    var shiftTypes;
-    (function (shiftTypes) {
-        'use strict';
-        var ShiftTypesService = (function () {
-            function ShiftTypesService(restangular) {
-                this.Resource = restangular.service('shift_types');
-                this.Restangular = restangular;
-            }
-            /**
-             * Return a list of shift.
-             *
-             * The list will be fetched from the local memory when exists, otherwise
-             * an api call is triggered.
-             *
-             * @returns $bluebird
-             */
-            ShiftTypesService.prototype.getAll = function (params) {
-                if (params === void 0) { params = []; }
-                return this.Resource.one().customGET('', params);
-            };
-            /**
-             * Returns a single shift based on its id.
-             *
-             * @param id
-             * @returns $bluebird
-             */
-            ShiftTypesService.prototype.getById = function (id) {
-                return this.Resource.one(id).get();
-            };
-            /**
-             * Will delete a single shift based on its id.
-             *
-             * @param shiftType
-             */
-            ShiftTypesService.prototype.remove = function (shiftType) {
-                return this.Resource.one(shiftType.id).remove();
-            };
-            /**
-             * Will save an existing shift or create a new one.
-             *
-             * @param shiftType
-             */
-            ShiftTypesService.prototype.save = function (shiftType) {
-                var id = shiftType.id;
-                var promise;
-                if (typeof id === 'undefined' || id === null) {
-                    promise = this.Resource.post(shiftType);
-                }
-                else {
-                    promise = this.Resource.getById(id).then(function (originalShift) {
-                        _.assign(originalShift, shiftType);
-                        return originalShift.put();
-                    });
-                }
-                return promise.then(function (data) {
-                    _.assign(data, shiftType);
-                    return data;
-                });
-            };
-            ShiftTypesService.$inject = ['Restangular'];
-            return ShiftTypesService;
-        })();
-        shiftTypes.ShiftTypesService = ShiftTypesService;
-        angular.module('angularShift.shiftTypes').service('ShiftTypesService', ShiftTypesService);
-    })(shiftTypes = angularShift.shiftTypes || (angularShift.shiftTypes = {}));
-})(angularShift || (angularShift = {}));
-/// <reference path="../_all.ts" />
-/// <reference path='shfitTypes_app.ts' />
-/// <reference path="ShiftTypeEditController" />
-/// <reference path="ShiftTypeInterface" />
-/// <reference path="ShiftTypesService" />
-/// <reference path='_all.ts' />
 ;
 /// <reference path='../_all.ts' />
 var angularShift;
@@ -673,6 +468,7 @@ var angularShift;
         angular.module('angularShift.shifts').service('ShiftsService', ShiftsService);
     })(shifts = angularShift.shifts || (angularShift.shifts = {}));
 })(angularShift || (angularShift = {}));
+/// <reference path='../_all.ts' />
 /// <reference path='../_all.ts' />
 var angularShift;
 (function (angularShift) {
@@ -866,41 +662,13 @@ var angularShift;
         angular.module('angularShift.shifts').controller('ShiftsShowController', ShiftsShowController);
     })(shifts = angularShift.shifts || (angularShift.shifts = {}));
 })(angularShift || (angularShift = {}));
-/// <reference path="../_all.ts" />
-/// <reference path='shifts_app.ts' />
-/// <reference path='../shiftEntries/ShiftEntriesService.ts' />
-/// <reference path='../shiftEntries/ShiftEntryInterface.ts' />
-/// <reference path='../shiftTypes/ShiftTypeInterface.ts' />
-/// <reference path='../neededAngels/models/NeededAngelTypeInterface.ts' />
-/// <reference path='../utils/NotificationService.ts' />
-/// <reference path='../utils/ConfirmationService.ts' />
-/// <reference path='services/ShiftsService.ts' />
-/// <reference path='models/ShiftInterface.ts' />
-/// <reference path='services/ShiftEventConverter.ts' />
-/// <reference path='controllers/ShiftsOnCalendarController' />
-/// <reference path='controllers/ShiftsEditController' />
-/// <reference path='controllers/ShiftsShowController' />
-/// <reference path='../_all.ts' />
-/// <reference path="../_all.ts" />
-/// <referrnce path='neededAngels_app.ts' />
-/// <reference path='models/NeededAngelTypeInterface.ts' />
-/// <reference path='models/AngelTypeInterface.ts' />
-///<reference path='../locations/LocationInterface.ts' />
-///<reference path='../shifts/models/ShiftInterface.ts' />
-/// <reference path='../_all.ts' />
-/// <reference path="../_all.ts" />
-/// <reference path='locations_app.ts' />
-/// <reference path="LocationInterface.ts" />
-/// <reference path="LocationEditController.ts" />
-/// <reference path="LocationsService" />
-/// <reference path="../neededAngels/models/NeededAngelTypeInterface.ts" />
 /// <reference path='_all.ts' />
 var angularShift;
 (function (angularShift) {
-    var locations;
-    (function (locations) {
-        var LocationEditController = (function () {
-            function LocationEditController(notificationService, $state, service) {
+    var shifts;
+    (function (shifts) {
+        var ShiftTypeEditController = (function () {
+            function ShiftTypeEditController(notificationService, $state, service) {
                 this.notificationService = notificationService;
                 this.$state = $state;
                 this.service = service;
@@ -914,41 +682,269 @@ var angularShift;
              * - needed Angeltypes in directive
              * - save on click
              */
-            LocationEditController.prototype.init = function () {
+            ShiftTypeEditController.prototype.init = function () {
                 var _this = this;
-                var locationId = this.$state.params.id;
-                this.notificationService.warning('WORK IN PROGRESS', 'This feature isn`t implemented yet. Use <a href="/?p=user_shifts&edit_shift=' + locationId + '">Link (edit location)</a> instead');
-                this.service.getById(locationId).then(function (location) {
-                    _this.location = location;
-                    _this.notificationService.success('SUCCESS', 'Successfully loaded resource ' + location.Name);
+                var shiftTypeId = this.$state.params.id;
+                this.notificationService.warning('WORK IN PROGRESS', 'This feature isn`t implemented yet. Use <a href="/?p=user_shifts&edit_shift=' + shiftTypeId + '">Link (edit shift type)</a> instead');
+                this.service.getById(shiftTypeId).then(function (shiftType) {
+                    _this.shiftType = shiftType;
+                    _this.notificationService.success('SUCCESS', 'Successfully loaded resource ' + shiftType.name);
                 }, function (error) {
                     _this.notificationService.error('ERROR', 'Not able to fetch resource');
                 });
             };
-            return LocationEditController;
+            return ShiftTypeEditController;
         })();
-        locations.LocationEditController = LocationEditController;
-        LocationEditController.$inject = ['NotificationService', '$state', 'LocationsService'];
-        angular.module('angularShift.shifts').controller('LocationEditController', LocationEditController);
-    })(locations = angularShift.locations || (angularShift.locations = {}));
+        shifts.ShiftTypeEditController = ShiftTypeEditController;
+        ShiftTypeEditController.$inject = ['NotificationService', '$state', 'ShiftTypesService'];
+        angular.module('angularShift.shifts').controller('ShiftTypeEditController', ShiftTypeEditController);
+    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
 })(angularShift || (angularShift = {}));
 /// <reference path='_all.ts' />
-/**
- * The main application file
- *
- * @todo Remove cause its a lib
- *
- * @type {angular.Module}
- */
+;
+/// <reference path='_all.ts' />
 var angularShift;
 (function (angularShift) {
-    var neededAngels;
-    (function (neededAngels) {
+    var shiftTypes;
+    (function (shiftTypes) {
         'use strict';
-        angular
-            .module('angularShift.neededAngels', []);
-    })(neededAngels = angularShift.neededAngels || (angularShift.neededAngels = {}));
+        var ShiftTypesService = (function () {
+            function ShiftTypesService(restangular) {
+                this.Resource = restangular.service('shift_types');
+                this.Restangular = restangular;
+            }
+            /**
+             * Return a list of shift.
+             *
+             * The list will be fetched from the local memory when exists, otherwise
+             * an api call is triggered.
+             *
+             * @returns $bluebird
+             */
+            ShiftTypesService.prototype.getAll = function (params) {
+                if (params === void 0) { params = []; }
+                return this.Resource.one().customGET('', params);
+            };
+            /**
+             * Returns a single shift based on its id.
+             *
+             * @param id
+             * @returns $bluebird
+             */
+            ShiftTypesService.prototype.getById = function (id) {
+                return this.Resource.one(id).get();
+            };
+            /**
+             * Will delete a single shift based on its id.
+             *
+             * @param shiftType
+             */
+            ShiftTypesService.prototype.remove = function (shiftType) {
+                return this.Resource.one(shiftType.id).remove();
+            };
+            /**
+             * Will save an existing shift or create a new one.
+             *
+             * @param shiftType
+             */
+            ShiftTypesService.prototype.save = function (shiftType) {
+                var id = shiftType.id;
+                var promise;
+                if (typeof id === 'undefined' || id === null) {
+                    promise = this.Resource.post(shiftType);
+                }
+                else {
+                    promise = this.Resource.getById(id).then(function (originalShift) {
+                        _.assign(originalShift, shiftType);
+                        return originalShift.put();
+                    });
+                }
+                return promise.then(function (data) {
+                    _.assign(data, shiftType);
+                    return data;
+                });
+            };
+            ShiftTypesService.$inject = ['Restangular'];
+            return ShiftTypesService;
+        })();
+        shiftTypes.ShiftTypesService = ShiftTypesService;
+        angular.module('angularShift.shiftTypes').service('ShiftTypesService', ShiftTypesService);
+    })(shiftTypes = angularShift.shiftTypes || (angularShift.shiftTypes = {}));
 })(angularShift || (angularShift = {}));
+/// <reference path='../_all.ts' />
+var angularShift;
+(function (angularShift) {
+    var utils;
+    (function (utils) {
+        var ConfirmationService = (function () {
+            function ConfirmationService($q) {
+                this.$q = $q;
+            }
+            ConfirmationService.prototype.confirm = function (values, successCb) {
+                var defaultValues = {
+                    title: 'Confirm',
+                    message: 'Do you really want to continue?',
+                    buttons: {
+                        cancel: {
+                            label: 'Cancel',
+                            className: 'btn',
+                            callback: function () {
+                                return false;
+                            }
+                        },
+                        confirm: {
+                            label: 'OK',
+                            className: 'btn btn-primary',
+                            callback: successCb
+                        }
+                    }
+                };
+                if (_.isObject(values)) {
+                    _.merge(defaultValues, values);
+                }
+                return this.$q(function (resolve, reject) {
+                    defaultValues.callback = function (result) {
+                        resolve(result);
+                    };
+                    return bootbox.dialog(defaultValues);
+                });
+            };
+            return ConfirmationService;
+        })();
+        utils.ConfirmationService = ConfirmationService;
+        ConfirmationService.$inject = ['$q'];
+        angular
+            .module('angularShift.utils.Confirmation', [])
+            .service('ConfirmationService', ConfirmationService);
+    })(utils = angularShift.utils || (angularShift.utils = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path='../_all.ts' />
+var angularShift;
+(function (angularShift) {
+    var utils;
+    (function (utils) {
+        var NotificationService = (function () {
+            function NotificationService(toastr) {
+                this.toastr = toastr;
+                this.toastrConfig = {
+                    tapToDismiss: true,
+                    closeButton: true,
+                    timeOut: 5000,
+                    extendedTimeOut: 0,
+                    allowHtml: true
+                };
+            }
+            /**
+             * Display a success message
+             *
+             * @param {string} title
+             * @param {string} message
+             * @param {object|undefined} customConfig
+             */
+            NotificationService.prototype.success = function (title, message, customConfig) {
+                if (customConfig === void 0) { customConfig = {}; }
+                this.showToastrMessage('success', title, message, customConfig);
+            };
+            /**
+             * Display a info message
+             *
+             * @param {string} title
+             * @param {string} message
+             * @param {object|undefined} customConfig
+             */
+            NotificationService.prototype.info = function (title, message, customConfig) {
+                if (customConfig === void 0) { customConfig = {}; }
+                this.showToastrMessage('info', title, message, customConfig);
+            };
+            /**
+             * Display a error message
+             *
+             * @param {string} title
+             * @param {string} message
+             * @param {object|undefined} customConfig
+             */
+            NotificationService.prototype.error = function (title, message, customConfig) {
+                if (customConfig === void 0) { customConfig = {}; }
+                this.showToastrMessage('error', title, message, customConfig);
+            };
+            /**
+             * Display a warning message
+             *
+             * @param {string} title
+             * @param {string} message
+             * @param {object|undefined} customConfig
+             */
+            NotificationService.prototype.warning = function (title, message, customConfig) {
+                if (customConfig === void 0) { customConfig = {}; }
+                this.showToastrMessage('warning', title, message, customConfig);
+            };
+            /**
+             * Enrich the toastr call with the predefined toastr config
+             *
+             * @param {string} method
+             * @param {string} title
+             * @param {string} message
+             * @param {object|null} customConfig
+             */
+            NotificationService.prototype.showToastrMessage = function (method, title, message, customConfig) {
+                if (customConfig === void 0) { customConfig = {}; }
+                customConfig = customConfig || {};
+                var config = angular.extend(this.toastrConfig, customConfig);
+                if (false === angular.isFunction(this.toastr[method])) {
+                    throw method + ' is not a toastr method';
+                }
+                this.toastr[method](message, title, config);
+            };
+            return NotificationService;
+        })();
+        utils.NotificationService = NotificationService;
+        NotificationService.$inject = ['toastr'];
+        var app = angular.module('angularShift.utils.notification', []);
+        app.service('NotificationService', NotificationService);
+    })(utils = angularShift.utils || (angularShift.utils = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path='shiftTypes/shiftTypes_app.ts' />
+/// <reference path='shiftEntries/shiftEntries_app.ts' />
+/// <reference path='neededAngels/neededAngels_app.ts' />
+/// <reference path='locations/locations_app.ts' />
+/// <reference path='shifts/shifts_app.ts' />
+/// <reference path='app.ts' />
+// The locations module
+/// <reference path="locations/LocationInterface.ts" />
+/// <reference path="locations/LocationEditController.ts" />
+/// <reference path="locations/LocationsService" />
+// The neededAngels module
+/// <reference path='neededAngels/models/NeededAngelTypeInterface.ts' />
+/// <reference path='neededAngels/models/AngelTypeInterface.ts' />
+// The shiftEntries module
+/// <reference path='shiftEntries/ShiftEntriesService.ts' />
+/// <reference path='shiftEntries/ShiftEntryInterface.ts' />
+// The shifts module
+/// <reference path='shifts/services/ShiftsService.ts' />
+/// <reference path='shifts/models/ShiftInterface.ts' />
+/// <reference path='shifts/services/ShiftEventConverter.ts' />
+/// <reference path='shifts/controllers/ShiftsOnCalendarController' />
+/// <reference path='shifts/controllers/ShiftsEditController' />
+/// <reference path='shifts/controllers/ShiftsShowController' />
+// The shiftTypes module
+/// <reference path="shiftTypes/ShiftTypeEditController" />
+/// <reference path="shiftTypes/ShiftTypeInterface" />
+/// <reference path="shiftTypes/ShiftTypesService" />
+// Utils component
+/// <reference path='utils/ConfirmationService.ts' />
+/// <reference path='utils/NotificationService.ts' />
+// General or application wide stuff
+/// <reference path="../typings/lodash/lodash.d.ts" />
+/// <reference path='../typings/angularjs/angular.d.ts' />
+/// <reference path='../typings/fullCalendar/fullCalendar.d.ts' />
+/// <reference path='../typings/restangular/restangular.d.ts' />
+/// <reference path='../typings/toastr/toastr.d.ts' />
+/// <reference path='../typings/bootstrap/bootstrap.d.ts' />
+/// <reference path='../typings/angular-ui-router/angular-ui-router.d.ts' />
+/// <reference path='../typings/es6-promise/es6-promise.d.ts' />
+/// <reference path='../typings/jquery/jquery.d.ts' />
+/// <reference path='../typings/bootbox/bootbox.d.ts' />
+/// <reference path='../typings/moment/moment.d.ts' />
 /// <reference path="../_all.ts" />
 var angularShift;
 (function (angularShift) {
