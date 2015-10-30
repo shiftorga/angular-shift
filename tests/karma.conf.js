@@ -6,21 +6,12 @@ module.exports = function(config){
         basePath: '../',
 
         files: [
-            'components/angular/angular.js',
-            'components/angular-mocks/angular-mocks.js',
-            'components/lodash/dist/lodash.min.js',
-            'components/restangular/dist/restangular.js',
+            'dist/vendors.js',
 
-            'src/app.js',
-            'src/**/*_app.js',
-            'src/**/**/*.js',
-            'src/**/*.js',
-            'src/*.js',
+            'dist/angular.shifts.js',
 
-            'tests/fakeApi/*.js',
 
             'tests/unit/**/*.js',
-            'tests/integration/*.js'
         ],
 
         autoWatch: true,

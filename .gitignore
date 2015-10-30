@@ -1,2 +1,9 @@
 node_modules/
 components/
+
+/src/**/**/*.js
+/src/**/**/*.map
+/src/**/*.js
+/src/**/*.map
+/src/*.js
+/src/*.map

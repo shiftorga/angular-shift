@@ -1,17 +1,17 @@
 {
-  "name": "engelsystem",
+  "name": "angular-shift",
   "version": "0.0.1",
   "authors": [
     "electricmaxxx <maximilian.berghoff@mayflower.de>"
   ],
-  "repository": "https://github.com/muccc/engelsystem.git",
+  "repository": "https://github.com/shiftorga/angular-shift.git",
   "description": "The engelsystem is an application to display shifts for helper.",
-  "homepage": "https://github.com/muccc/engelsystem.git",
+  "homepage": "https://github.com/shiftorga/angular-shift.git",
   "license": "MIT",
   "dependencies": {
-    "angular": "1.4.5",
+    "angular": "1.4.7",
     "bootstrap": "3.3.5",
-    "angular-mocks": "1.4.*",
+    "angular-mocks": "1.4.7",
     "lodash": "2.4.x",
     "lodash-contrib": "241.4.x",
     "restangular": "~1.4.0",
@@ -24,6 +24,13 @@
     "icomoon": "~0.0.3",
     "jquery-ui": "~1.11.4",
     "bootstrap-datepicker": "~1.4.1",
-    "chart": "*"
+    "chart": "*",
+    "angular-moment": "~0.10.3",
+    "select2-bootstrap-css": "~1.4.6",
+    "select2": "3.5.4",
+    "bootstrap-sass-only": "~3.4.4"
+  },
+  "resolutions": {
+    "angular": "1.4.7"
   }
 }

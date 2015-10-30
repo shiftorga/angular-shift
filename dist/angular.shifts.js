@@ -1,19 +1,175 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-/// <reference path="../typings/lodash/lodash.d.ts" />
-/// <reference path='../typings/angularjs/angular.d.ts' />
-/// <reference path='../typings/fullCalendar/fullCalendar.d.ts' />
-/// <reference path='../typings/restangular/restangular.d.ts' />
-/// <reference path='../typings/toastr/toastr.d.ts' />
-/// <reference path='../typings/bootstrap/bootstrap.d.ts' />
-/// <reference path='../typings/angular-ui-router/angular-ui-router.d.ts' />
-/// <reference path='../typings/es6-promise/es6-promise.d.ts' />
-/// <reference path='../typings/jquery/jquery.d.ts' />
-/// <reference path='../typings/bootbox/bootbox.d.ts' />
-/// <reference path='utils/ConfirmationService.ts' />
-/// <reference path='utils/NotificationService.ts' />
-/// <reference path='../typings/moment/moment.d.ts' />
-
-},{}],2:[function(require,module,exports){
+/// <reference path="../_all.ts" />
+/// <reference path='_all.ts' />
+/**
+ * The main application file
+ *
+ * @todo Remove cause its a lib
+ *
+ * @type {angular.Module}
+ */
+var angularShift;
+(function (angularShift) {
+    var shiftTypes;
+    (function (shiftTypes) {
+        'use strict';
+        angular
+            .module('angularShift.shiftTypes', [])
+            .config(function ($stateProvider) {
+            $stateProvider
+                .state({
+                name: 'shiftType',
+                url: '/shift_type',
+                abstract: true,
+                views: { content: { templateUrl: "partials/shifts/shifts.html" } }
+            })
+                .state({
+                name: 'shiftType.edit',
+                url: "/edit/{id:int}",
+                views: {
+                    edit: {
+                        templateUrl: "partials/shifts/shift_type_edit.html",
+                        controller: "ShiftTypeEditController",
+                        controllerAs: 'shiftTypeEdit'
+                    }
+                }
+            });
+        });
+    })(shiftTypes = angularShift.shiftTypes || (angularShift.shiftTypes = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path="../_all.ts" />
+/// <reference path='_all.ts' />
+/**
+ * The main application file
+ *
+ * @todo Remove cause its a lib
+ *
+ * @type {angular.Module}
+ */
+var angularShift;
+(function (angularShift) {
+    var shiftEntries;
+    (function (shiftEntries) {
+        'use strict';
+        angular
+            .module('angularShift.shiftEntries', []);
+    })(shiftEntries = angularShift.shiftEntries || (angularShift.shiftEntries = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path="../_all.ts" />
+/// <reference path='_all.ts' />
+/**
+ * The main application file
+ *
+ * @todo Remove cause its a lib
+ *
+ * @type {angular.Module}
+ */
+var angularShift;
+(function (angularShift) {
+    var neededAngels;
+    (function (neededAngels) {
+        'use strict';
+        angular
+            .module('angularShift.neededAngels', []);
+    })(neededAngels = angularShift.neededAngels || (angularShift.neededAngels = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path="../_all.ts" />
+/// <reference path='_all.ts' />
+/**
+ * The main application file
+ *
+ * @todo Remove cause its a lib
+ *
+ * @type {angular.Module}
+ */
+var angularShift;
+(function (angularShift) {
+    var locations;
+    (function (locations) {
+        'use strict';
+        angular
+            .module('angularShift.locations', [])
+            .config(function ($stateProvider) {
+            $stateProvider
+                .state({
+                name: 'locations',
+                url: '/locations',
+                abstract: true,
+                views: { content: { templateUrl: "partials/shifts/shifts.html" } }
+            })
+                .state({
+                name: 'locations.edit',
+                url: "/edit/{id:int}",
+                views: {
+                    edit: {
+                        templateUrl: "partials/shifts/location_edit.html",
+                        controller: "LocationEditController",
+                        controllerAs: 'locationEdit'
+                    }
+                }
+            });
+        });
+    })(locations = angularShift.locations || (angularShift.locations = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path="../_all.ts" />
+/// <reference path='_all.ts' />
+/**
+ * The main application file
+ *
+ * @todo Remove cause its a lib
+ *
+ * @type {angular.Module}
+ */
+var angularShift;
+(function (angularShift) {
+    var shifts;
+    (function (shifts) {
+        'use strict';
+        angular
+            .module('angularShift.shifts', ['ui.calendar', 'ui.router'])
+            .config(function ($stateProvider) {
+            $stateProvider
+                .state({
+                name: 'shifts',
+                url: '/user_shifts',
+                abstract: true,
+                views: { content: { templateUrl: "partials/shifts/shifts.html" } }
+            })
+                .state({
+                name: 'shifts.calendar',
+                url: "/calendar",
+                views: {
+                    main: {
+                        templateUrl: "partials/shifts/calendar.html",
+                        controller: "ShiftsOnCalendarController",
+                        controllerAs: 'shiftsOnCalendar'
+                    }
+                }
+            })
+                .state({
+                name: 'shifts.show',
+                url: "/show/{id}",
+                views: {
+                    main: {
+                        templateUrl: "partials/shifts/show.html",
+                        controller: "ShiftsShowController",
+                        controllerAs: 'shiftShow'
+                    }
+                }
+            })
+                .state({
+                name: 'shifts.edit',
+                url: "/edit/{id:int}",
+                views: {
+                    edit: {
+                        templateUrl: "partials/shifts/edit.html",
+                        controller: "ShiftsEditController",
+                        controllerAs: 'shiftEdit'
+                    }
+                }
+            });
+        });
+    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
+})(angularShift || (angularShift = {}));
 /// <reference path='_all.ts' />
 /**
  * The main application file
@@ -45,8 +201,15 @@ var angularShift;
         $urlRouterProvider.otherwise("/user_shifts/calendar");
     });
 })(angularShift || (angularShift = {}));
-
-},{}],3:[function(require,module,exports){
+/// <reference path='_all.ts' />
+var angularShift;
+(function (angularShift) {
+    var locations;
+    (function (locations) {
+        ;
+    })(locations = angularShift.locations || (angularShift.locations = {}));
+})(angularShift || (angularShift = {}));
+;
 /// <reference path='_all.ts' />
 var angularShift;
 (function (angularShift) {
@@ -85,19 +248,6 @@ var angularShift;
         angular.module('angularShift.shifts').controller('LocationEditController', LocationEditController);
     })(locations = angularShift.locations || (angularShift.locations = {}));
 })(angularShift || (angularShift = {}));
-
-},{}],4:[function(require,module,exports){
-/// <reference path='_all.ts' />
-var angularShift;
-(function (angularShift) {
-    var locations;
-    (function (locations) {
-        ;
-    })(locations = angularShift.locations || (angularShift.locations = {}));
-})(angularShift || (angularShift = {}));
-;
-
-},{}],5:[function(require,module,exports){
 /// <reference path='_all.ts' />
 var angularShift;
 (function (angularShift) {
@@ -167,85 +317,8 @@ var angularShift;
         angular.module('angularShift.locations').service('LocationsService', LocationsService);
     })(locations = angularShift.locations || (angularShift.locations = {}));
 })(angularShift || (angularShift = {}));
-
-},{}],6:[function(require,module,exports){
-/// <reference path="../_all.ts" />
-/// <reference path="LocationInterface.ts" />
-/// <reference path="LocationEditController.ts" />
-/// <reference path="LocationsService" />
-/// <reference path="../neededAngels/models/NeededAngelTypeInterface.ts" />
-
-},{}],7:[function(require,module,exports){
-/// <reference path='_all.ts' />
-/**
- * The main application file
- *
- * @todo Remove cause its a lib
- *
- * @type {angular.Module}
- */
-var angularShift;
-(function (angularShift) {
-    var locations;
-    (function (locations) {
-        'use strict';
-        angular
-            .module('angularShift.locations', [])
-            .config(function ($stateProvider) {
-            $stateProvider
-                .state({
-                name: 'locations',
-                url: '/locations',
-                abstract: true,
-                views: { content: { templateUrl: "partials/shifts/shifts.html" } }
-            })
-                .state({
-                name: 'locations.edit',
-                url: "/edit/{id:int}",
-                views: {
-                    edit: {
-                        templateUrl: "partials/shifts/location_edit.html",
-                        controller: "LocationEditController",
-                        controllerAs: 'locationEdit'
-                    },
-                }
-            });
-        });
-    })(locations = angularShift.locations || (angularShift.locations = {}));
-})(angularShift || (angularShift = {}));
-
-},{}],8:[function(require,module,exports){
-/// <reference path="../_all.ts" />
-/// <reference path='models/NeededAngelTypeInterface.ts' />
-/// <reference path='models/AngelTypeInterface.ts' />
-///<reference path='../locations/LocationInterface.ts' />
-///<reference path='../shifts/models/ShiftInterface.ts' />
-
-},{}],9:[function(require,module,exports){
 /// <reference path='../_all.ts' />
-
-},{}],10:[function(require,module,exports){
-module.exports=require(9)
-},{"/home/maximilian/OpenSource/shiftorga/angular-shift/src/neededAngels/models/AngelTypeInterface.js":9}],11:[function(require,module,exports){
-/// <reference path='_all.ts' />
-/**
- * The main application file
- *
- * @todo Remove cause its a lib
- *
- * @type {angular.Module}
- */
-var angularShift;
-(function (angularShift) {
-    var neededAngels;
-    (function (neededAngels) {
-        'use strict';
-        angular
-            .module('angularShift.neededAngels', []);
-    })(neededAngels = angularShift.neededAngels || (angularShift.neededAngels = {}));
-})(angularShift || (angularShift = {}));
-
-},{}],12:[function(require,module,exports){
+/// <reference path='../_all.ts' />
 /// <reference path='_all.ts' />
 var angularShift;
 (function (angularShift) {
@@ -315,8 +388,6 @@ var angularShift;
         angular.module('angularShift.shifts').service('ShiftEntriesService', ShiftEntriesService);
     })(shiftEntries = angularShift.shiftEntries || (angularShift.shiftEntries = {}));
 })(angularShift || (angularShift = {}));
-
-},{}],13:[function(require,module,exports){
 /// <reference path='_all.ts' />
 var angularShift;
 (function (angularShift) {
@@ -326,466 +397,6 @@ var angularShift;
     })(shiftEntries = angularShift.shiftEntries || (angularShift.shiftEntries = {}));
 })(angularShift || (angularShift = {}));
 ;
-
-},{}],14:[function(require,module,exports){
-/// <reference path="../_all.ts" />
-/// <reference path='ShiftEntriesService.ts' />
-/// <reference path='ShiftEntryInterface.ts' />
-/// <reference path='../shifts/models/ShiftInterface.ts' />
-/// <reference path='../neededAngels/models/AngelTypeInterface.ts' />
-
-},{}],15:[function(require,module,exports){
-/// <reference path='_all.ts' />
-/**
- * The main application file
- *
- * @todo Remove cause its a lib
- *
- * @type {angular.Module}
- */
-var angularShift;
-(function (angularShift) {
-    var shiftEntries;
-    (function (shiftEntries) {
-        'use strict';
-        angular
-            .module('angularShift.shiftEntries', []);
-    })(shiftEntries = angularShift.shiftEntries || (angularShift.shiftEntries = {}));
-})(angularShift || (angularShift = {}));
-
-},{}],16:[function(require,module,exports){
-/// <reference path='_all.ts' />
-var angularShift;
-(function (angularShift) {
-    var shifts;
-    (function (shifts) {
-        var ShiftTypeEditController = (function () {
-            function ShiftTypeEditController(notificationService, $state, service) {
-                this.notificationService = notificationService;
-                this.$state = $state;
-                this.service = service;
-                this.init();
-            }
-            /**
-             * ToDos
-             * - get shift types list by service
-             * - get locations list by service
-             * - start/end -> form type with day + time
-             * - needed Angeltypes in directive
-             * - save on click
-             */
-            ShiftTypeEditController.prototype.init = function () {
-                var _this = this;
-                var shiftTypeId = this.$state.params.id;
-                this.notificationService.warning('WORK IN PROGRESS', 'This feature isn`t implemented yet. Use <a href="/?p=user_shifts&edit_shift=' + shiftTypeId + '">Link (edit shift type)</a> instead');
-                this.service.getById(shiftTypeId).then(function (shiftType) {
-                    _this.shiftType = shiftType;
-                    _this.notificationService.success('SUCCESS', 'Successfully loaded resource ' + shiftType.name);
-                }, function (error) {
-                    _this.notificationService.error('ERROR', 'Not able to fetch resource');
-                });
-            };
-            return ShiftTypeEditController;
-        })();
-        shifts.ShiftTypeEditController = ShiftTypeEditController;
-        ShiftTypeEditController.$inject = ['NotificationService', '$state', 'ShiftTypesService'];
-        angular.module('angularShift.shifts').controller('ShiftTypeEditController', ShiftTypeEditController);
-    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
-})(angularShift || (angularShift = {}));
-
-},{}],17:[function(require,module,exports){
-/// <reference path='_all.ts' />
-;
-
-},{}],18:[function(require,module,exports){
-/// <reference path='_all.ts' />
-var angularShift;
-(function (angularShift) {
-    var shiftTypes;
-    (function (shiftTypes) {
-        'use strict';
-        var ShiftTypesService = (function () {
-            function ShiftTypesService(restangular) {
-                this.Resource = restangular.service('shift_types');
-                this.Restangular = restangular;
-            }
-            /**
-             * Return a list of shift.
-             *
-             * The list will be fetched from the local memory when exists, otherwise
-             * an api call is triggered.
-             *
-             * @returns $bluebird
-             */
-            ShiftTypesService.prototype.getAll = function (params) {
-                if (params === void 0) { params = []; }
-                return this.Resource.one().customGET('', params);
-            };
-            /**
-             * Returns a single shift based on its id.
-             *
-             * @param id
-             * @returns $bluebird
-             */
-            ShiftTypesService.prototype.getById = function (id) {
-                return this.Resource.one(id).get();
-            };
-            /**
-             * Will delete a single shift based on its id.
-             *
-             * @param shiftType
-             */
-            ShiftTypesService.prototype.remove = function (shiftType) {
-                return this.Resource.one(shiftType.id).remove();
-            };
-            /**
-             * Will save an existing shift or create a new one.
-             *
-             * @param shiftType
-             */
-            ShiftTypesService.prototype.save = function (shiftType) {
-                var id = shiftType.id;
-                var promise;
-                if (typeof id === 'undefined' || id === null) {
-                    promise = this.Resource.post(shiftType);
-                }
-                else {
-                    promise = this.Resource.getById(id).then(function (originalShift) {
-                        _.assign(originalShift, shiftType);
-                        return originalShift.put();
-                    });
-                }
-                return promise.then(function (data) {
-                    _.assign(data, shiftType);
-                    return data;
-                });
-            };
-            ShiftTypesService.$inject = ['Restangular'];
-            return ShiftTypesService;
-        })();
-        shiftTypes.ShiftTypesService = ShiftTypesService;
-        angular.module('angularShift.shiftTypes').service('ShiftTypesService', ShiftTypesService);
-    })(shiftTypes = angularShift.shiftTypes || (angularShift.shiftTypes = {}));
-})(angularShift || (angularShift = {}));
-
-},{}],19:[function(require,module,exports){
-/// <reference path="../_all.ts" />
-/// <reference path="ShiftTypeEditController" />
-/// <reference path="ShiftTypeInterface" />
-/// <reference path="ShiftTypesService" />
-
-},{}],20:[function(require,module,exports){
-/// <reference path='_all.ts' />
-/**
- * The main application file
- *
- * @todo Remove cause its a lib
- *
- * @type {angular.Module}
- */
-var angularShift;
-(function (angularShift) {
-    var shiftTypes;
-    (function (shiftTypes) {
-        'use strict';
-        angular
-            .module('angularShift.shiftTypes', [])
-            .config(function ($stateProvider) {
-            $stateProvider
-                .state({
-                name: 'shiftType',
-                url: '/shift_type',
-                abstract: true,
-                views: { content: { templateUrl: "partials/shifts/shifts.html" } }
-            })
-                .state({
-                name: 'shiftType.edit',
-                url: "/edit/{id:int}",
-                views: {
-                    edit: {
-                        templateUrl: "partials/shifts/shift_type_edit.html",
-                        controller: "ShiftTypeEditController",
-                        controllerAs: 'shiftTypeEdit'
-                    },
-                }
-            });
-        });
-    })(shiftTypes = angularShift.shiftTypes || (angularShift.shiftTypes = {}));
-})(angularShift || (angularShift = {}));
-
-},{}],21:[function(require,module,exports){
-/// <reference path="../_all.ts" />
-/// <reference path='../shiftEntries/ShiftEntriesService.ts' />
-/// <reference path='../shiftEntries/ShiftEntryInterface.ts' />
-/// <reference path='../shiftTypes/ShiftTypeInterface.ts' />
-/// <reference path='../neededAngels/models/NeededAngelTypeInterface.ts' />
-/// <reference path='../utils/NotificationService.ts' />
-/// <reference path='../utils/ConfirmationService.ts' />
-/// <reference path='services/ShiftsService.ts' />
-/// <reference path='models/ShiftInterface.ts' />
-/// <reference path='services/ShiftEventConverter.ts' />
-/// <reference path='controllers/ShiftsOnCalendarController' />
-/// <reference path='controllers/ShiftsEditController' />
-/// <reference path='controllers/ShiftsShowController' />
-
-},{}],22:[function(require,module,exports){
-/// <reference path="../_all.ts" />
-var angularShift;
-(function (angularShift) {
-    var shifts;
-    (function (shifts) {
-        var ListFilterController = (function () {
-            function ListFilterController($scope, locationsService) {
-                this.services = {
-                    'location': null
-                };
-                this.services.location = locationsService;
-                this.$scope = $scope;
-                this.$scope.buttons = [];
-                this.init();
-            }
-            ListFilterController.prototype.init = function () {
-                var _this = this;
-                this.services.location.getAll().then(function (locations) {
-                    _.each(locations, function (location) {
-                        _this.$scope.buttons.push({ check: true, label: location.Name });
-                    });
-                });
-            };
-            return ListFilterController;
-        })();
-        shifts.ListFilterController = ListFilterController;
-        ListFilterController.$inject = ['$scope', 'LocationsService'];
-        angular.module('angularShift.shifts').controller('ListFilterController', ListFilterController);
-    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
-})(angularShift || (angularShift = {}));
-
-},{}],23:[function(require,module,exports){
-/// <reference path='../_all.ts' />
-var angularShift;
-(function (angularShift) {
-    var shifts;
-    (function (shifts) {
-        var ShiftsEditController = (function () {
-            function ShiftsEditController(notificationService, $state, shiftService) {
-                this.notificationService = notificationService;
-                this.$state = $state;
-                this.shiftsService = shiftService;
-                this.init();
-            }
-            /**
-             * ToDos
-             * - get shift types list by service
-             * - get locations list by service
-             * - start/end -> form type with day + time
-             * - needed Angeltypes in directive
-             * - save on click
-             */
-            ShiftsEditController.prototype.init = function () {
-                var _this = this;
-                var shiftId = this.$state.params.id;
-                this.notificationService.warning('WORK IN PROGRESS', 'This feature isn`t implemented yet. Use <a href="/?p=user_shifts&edit_shift=' + shiftId + '">Link (edit shift)</a> instead');
-                this.shiftsService.getById(shiftId).then(function (shift) {
-                    _this.shift = shift;
-                });
-            };
-            return ShiftsEditController;
-        })();
-        shifts.ShiftsEditController = ShiftsEditController;
-        ShiftsEditController.$inject = ['NotificationService', '$state', 'ShiftsService'];
-        angular.module('angularShift.shifts').controller('ShiftsEditController', ShiftsEditController);
-    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
-})(angularShift || (angularShift = {}));
-
-},{}],24:[function(require,module,exports){
-/// <reference path='../_all.ts' />
-var angularShift;
-(function (angularShift) {
-    var shifts;
-    (function (shifts) {
-        var ShiftsOnCalendarController = (function () {
-            function ShiftsOnCalendarController(uiCalendarConfig, $scope, shiftsService, converter, $state) {
-                var _this = this;
-                this.events = [];
-                this.date = new Date();
-                this.d = this.date.getDate();
-                this.m = this.date.getMonth();
-                this.y = this.date.getFullYear();
-                this.uiCalendarConfig = uiCalendarConfig;
-                this.shiftsService = shiftsService;
-                this.converter = converter;
-                this.eventSources = [];
-                this.$state = $state;
-                $scope.uiConfig = {
-                    calendar: {
-                        height: 450,
-                        editable: true,
-                        header: {
-                            left: 'month agendaWeek agendaDay',
-                            center: 'title',
-                            right: 'today prev,next'
-                        },
-                        eventClick: function (event) {
-                            _this.$state.go('shifts.show', { id: event.shiftValues.sid });
-                        },
-                        eventDrop: $scope.alertOnDrop,
-                        eventResize: $scope.alertOnResize,
-                        viewRender: function (view, element) {
-                            var params = {
-                                start: view.start.get()._d.getTime() / 1000,
-                                end: view.end.get()._d.getTime() / 1000
-                            };
-                            _this.shiftsService.getAll(params).then(function (data) {
-                                _.each(data, function (shift) {
-                                    _this.events.push(_this.converter.toEvent(shift));
-                                });
-                            });
-                            return true;
-                        }
-                    }
-                };
-                this.init();
-            }
-            ShiftsOnCalendarController.prototype.init = function () {
-                this.eventSources = [this.events];
-            };
-            return ShiftsOnCalendarController;
-        })();
-        shifts.ShiftsOnCalendarController = ShiftsOnCalendarController;
-        ShiftsOnCalendarController.$inject = [
-            'uiCalendarConfig',
-            '$scope',
-            'ShiftsService',
-            'ShiftsEventConverterService',
-            '$state',
-            'LocationsService'
-        ];
-        angular.module('angularShift.shifts').controller('ShiftsOnCalendarController', ShiftsOnCalendarController);
-    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
-})(angularShift || (angularShift = {}));
-
-},{}],25:[function(require,module,exports){
-/// <reference path='../_all.ts' />
-var angularShift;
-(function (angularShift) {
-    var shifts;
-    (function (shifts) {
-        var ShiftsShowController = (function () {
-            function ShiftsShowController($state, shiftsService, notificationService, confirmationService) {
-                this.dateValues = {
-                    dateStart: null,
-                    dateEnd: null,
-                    timeStart: null,
-                    timeEnd: null
-                };
-                this.shiftsService = shiftsService;
-                this.$state = $state;
-                this.notificationService = notificationService;
-                this.confirmation = confirmationService;
-                this.init();
-            }
-            ShiftsShowController.prototype.init = function () {
-                var _this = this;
-                var shiftid = this.$state.params.id;
-                this.shiftsService.getById(shiftid).then(function (shift) {
-                    _this.shift = shift;
-                    _this.dateValues = {
-                        dateStart: moment(shift.start, 'X').format('YYYY-M-DD'),
-                        dateEnd: moment(shift.end, 'X').format('YYYY-M-DD'),
-                        timeStart: moment(shift.start, 'X').format('HH:mm'),
-                        timeEnd: moment(shift.end, 'X').format('HH:mm')
-                    };
-                });
-            };
-            ShiftsShowController.prototype.countShiftEntriesForAngelType = function (shift, angelTypeId) {
-                var count = 0;
-                _.each(shift.shiftEntries, function (entry) {
-                    if (entry.angelType.id === angelTypeId) {
-                        count++;
-                    }
-                });
-                return count;
-            };
-            ShiftsShowController.prototype.getPercentage = function (now, max) {
-                var relation = now / max * 100;
-                return Math.round(relation);
-            };
-            ShiftsShowController.prototype.deleteShift = function (shift) {
-                var _this = this;
-                this.confirmation.confirm({ message: 'Do you really want to delete the shift <b>' + this.buildLabel(shift) + '</b>' }, function () {
-                    _this.shiftsService.remove(shift).then(function () {
-                        _this.$state.go('shift.calendar');
-                    }, function (error) {
-                        console.log(error);
-                        _this.notificationService.error('Failed to delete ...', 'Errors while trying to delete shift <b>' + _this.buildLabel(shift) + '</b>');
-                    });
-                });
-            };
-            ShiftsShowController.prototype.buildLabel = function (shift) {
-                var title = !_.isUndefined(shift.title) && '' !== shift.title && null !== shift.title ? shift.title : null;
-                return (null === title) ? shift.shiftType.name : title + ' (' + shift.shiftType.name + ')';
-            };
-            return ShiftsShowController;
-        })();
-        shifts.ShiftsShowController = ShiftsShowController;
-        ShiftsShowController.$inject = ['$state', 'ShiftsService', 'NotificationService', 'ConfirmationService'];
-        angular.module('angularShift.shifts').controller('ShiftsShowController', ShiftsShowController);
-    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
-})(angularShift || (angularShift = {}));
-
-},{}],26:[function(require,module,exports){
-/// <reference path="../_all.ts" />
-var angularShift;
-(function (angularShift) {
-    var shifts;
-    (function (shifts) {
-        angular.module('angularShift.shifts')
-            .directive('listFilter', function () {
-            return {
-                'restrict': 'E',
-                'templateUrl': 'partials/shifts/list_filter.html',
-                'scope': {
-                    type: '@'
-                },
-                link: function ($scope, element, attr) {
-                },
-                'controller': 'ListFilterController'
-            };
-        });
-    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
-})(angularShift || (angularShift = {}));
-
-},{}],27:[function(require,module,exports){
-module.exports=require(9)
-},{"/home/maximilian/OpenSource/shiftorga/angular-shift/src/neededAngels/models/AngelTypeInterface.js":9}],28:[function(require,module,exports){
-/// <reference path='../_all.ts' />
-var angularShift;
-(function (angularShift) {
-    var shifts;
-    (function (shifts) {
-        var ShiftEventConverter = (function () {
-            function ShiftEventConverter() {
-            }
-            ShiftEventConverter.prototype.toEvent = function (shift) {
-                var startDate = new Date();
-                startDate.setTime(shift.start * 1000);
-                var endDate = new Date();
-                endDate.setTime(shift.end * 1000);
-                return {
-                    title: !_.isUndefined(shift.title) ? shift.title + '(' + shift.shiftType.name + ')' : shift.shiftType.name,
-                    start: startDate,
-                    end: endDate,
-                    shiftValues: shift
-                };
-            };
-            return ShiftEventConverter;
-        })();
-        shifts.ShiftEventConverter = ShiftEventConverter;
-        angular.module('angularShift.shifts').service('ShiftsEventConverterService', ShiftEventConverter);
-    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
-})(angularShift || (angularShift = {}));
-
-},{}],29:[function(require,module,exports){
 /// <reference path='../_all.ts' />
 var angularShift;
 (function (angularShift) {
@@ -857,69 +468,309 @@ var angularShift;
         angular.module('angularShift.shifts').service('ShiftsService', ShiftsService);
     })(shifts = angularShift.shifts || (angularShift.shifts = {}));
 })(angularShift || (angularShift = {}));
-
-},{}],30:[function(require,module,exports){
-/// <reference path='_all.ts' />
-/**
- * The main application file
- *
- * @todo Remove cause its a lib
- *
- * @type {angular.Module}
- */
+/// <reference path='../_all.ts' />
+/// <reference path='../_all.ts' />
 var angularShift;
 (function (angularShift) {
     var shifts;
     (function (shifts) {
-        'use strict';
-        angular
-            .module('angularShift.shifts', ['ui.calendar', 'ui.router'])
-            .config(function ($stateProvider) {
-            $stateProvider
-                .state({
-                name: 'shifts',
-                url: '/user_shifts',
-                abstract: true,
-                views: { content: { templateUrl: "partials/shifts/shifts.html" } }
-            })
-                .state({
-                name: 'shifts.calendar',
-                url: "/calendar",
-                views: {
-                    main: {
-                        templateUrl: "partials/shifts/calendar.html",
-                        controller: "ShiftsOnCalendarController",
-                        controllerAs: 'shiftsOnCalendar'
-                    }
-                }
-            })
-                .state({
-                name: 'shifts.show',
-                url: "/show/{id}",
-                views: {
-                    main: {
-                        templateUrl: "partials/shifts/show.html",
-                        controller: "ShiftsShowController",
-                        controllerAs: 'shiftShow'
-                    }
-                }
-            })
-                .state({
-                name: 'shifts.edit',
-                url: "/edit/{id:int}",
-                views: {
-                    edit: {
-                        templateUrl: "partials/shifts/edit.html",
-                        controller: "ShiftsEditController",
-                        controllerAs: 'shiftEdit'
-                    },
-                }
-            });
-        });
+        var ShiftEventConverter = (function () {
+            function ShiftEventConverter() {
+            }
+            ShiftEventConverter.prototype.toEvent = function (shift) {
+                var startDate = new Date();
+                startDate.setTime(shift.start * 1000);
+                var endDate = new Date();
+                endDate.setTime(shift.end * 1000);
+                return {
+                    title: !_.isUndefined(shift.title) ? shift.title + '(' + shift.shiftType.name + ')' : shift.shiftType.name,
+                    start: startDate,
+                    end: endDate,
+                    shiftValues: shift
+                };
+            };
+            return ShiftEventConverter;
+        })();
+        shifts.ShiftEventConverter = ShiftEventConverter;
+        angular.module('angularShift.shifts').service('ShiftsEventConverterService', ShiftEventConverter);
     })(shifts = angularShift.shifts || (angularShift.shifts = {}));
 })(angularShift || (angularShift = {}));
-
-},{}],31:[function(require,module,exports){
+/// <reference path='../_all.ts' />
+var angularShift;
+(function (angularShift) {
+    var shifts;
+    (function (shifts) {
+        var ShiftsOnCalendarController = (function () {
+            function ShiftsOnCalendarController(uiCalendarConfig, $scope, shiftsService, converter, $state) {
+                var _this = this;
+                this.events = [];
+                this.date = new Date();
+                this.d = this.date.getDate();
+                this.m = this.date.getMonth();
+                this.y = this.date.getFullYear();
+                this.uiCalendarConfig = uiCalendarConfig;
+                this.shiftsService = shiftsService;
+                this.converter = converter;
+                this.eventSources = [];
+                this.$state = $state;
+                $scope.uiConfig = {
+                    calendar: {
+                        height: 450,
+                        editable: true,
+                        header: {
+                            left: 'month agendaWeek agendaDay',
+                            center: 'title',
+                            right: 'today prev,next'
+                        },
+                        eventClick: function (event) {
+                            _this.$state.go('shifts.show', { id: event.shiftValues.sid });
+                        },
+                        eventDrop: $scope.alertOnDrop,
+                        eventResize: $scope.alertOnResize,
+                        viewRender: function (view, element) {
+                            var params = {
+                                start: view.start.get()._d.getTime() / 1000,
+                                end: view.end.get()._d.getTime() / 1000
+                            };
+                            _this.shiftsService.getAll(params).then(function (data) {
+                                _.each(data, function (shift) {
+                                    _this.events.push(_this.converter.toEvent(shift));
+                                });
+                            });
+                            return true;
+                        }
+                    }
+                };
+                this.init();
+            }
+            ShiftsOnCalendarController.prototype.init = function () {
+                this.eventSources = [this.events];
+            };
+            return ShiftsOnCalendarController;
+        })();
+        shifts.ShiftsOnCalendarController = ShiftsOnCalendarController;
+        ShiftsOnCalendarController.$inject = [
+            'uiCalendarConfig',
+            '$scope',
+            'ShiftsService',
+            'ShiftsEventConverterService',
+            '$state',
+            'LocationsService'
+        ];
+        angular.module('angularShift.shifts').controller('ShiftsOnCalendarController', ShiftsOnCalendarController);
+    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path='../_all.ts' />
+var angularShift;
+(function (angularShift) {
+    var shifts;
+    (function (shifts) {
+        var ShiftsEditController = (function () {
+            function ShiftsEditController(notificationService, $state, shiftService) {
+                this.notificationService = notificationService;
+                this.$state = $state;
+                this.shiftsService = shiftService;
+                this.init();
+            }
+            /**
+             * ToDos
+             * - get shift types list by service
+             * - get locations list by service
+             * - start/end -> form type with day + time
+             * - needed Angeltypes in directive
+             * - save on click
+             */
+            ShiftsEditController.prototype.init = function () {
+                var _this = this;
+                var shiftId = this.$state.params.id;
+                this.notificationService.warning('WORK IN PROGRESS', 'This feature isn`t implemented yet. Use <a href="/?p=user_shifts&edit_shift=' + shiftId + '">Link (edit shift)</a> instead');
+                this.shiftsService.getById(shiftId).then(function (shift) {
+                    _this.shift = shift;
+                });
+            };
+            return ShiftsEditController;
+        })();
+        shifts.ShiftsEditController = ShiftsEditController;
+        ShiftsEditController.$inject = ['NotificationService', '$state', 'ShiftsService'];
+        angular.module('angularShift.shifts').controller('ShiftsEditController', ShiftsEditController);
+    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path='../_all.ts' />
+var angularShift;
+(function (angularShift) {
+    var shifts;
+    (function (shifts) {
+        var ShiftsShowController = (function () {
+            function ShiftsShowController($state, shiftsService, notificationService, confirmationService) {
+                this.dateValues = {
+                    dateStart: null,
+                    dateEnd: null,
+                    timeStart: null,
+                    timeEnd: null
+                };
+                this.shiftsService = shiftsService;
+                this.$state = $state;
+                this.notificationService = notificationService;
+                this.confirmation = confirmationService;
+                this.init();
+            }
+            ShiftsShowController.prototype.init = function () {
+                var _this = this;
+                var shiftid = this.$state.params.id;
+                this.shiftsService.getById(shiftid).then(function (shift) {
+                    _this.shift = shift;
+                    _this.dateValues = {
+                        dateStart: moment(shift.start, 'X').format('YYYY-M-DD'),
+                        dateEnd: moment(shift.end, 'X').format('YYYY-M-DD'),
+                        timeStart: moment(shift.start, 'X').format('HH:mm'),
+                        timeEnd: moment(shift.end, 'X').format('HH:mm')
+                    };
+                });
+            };
+            ShiftsShowController.prototype.countShiftEntriesForAngelType = function (shift, angelTypeId) {
+                var count = 0;
+                _.each(shift.shiftEntries, function (entry) {
+                    if (entry.angelType.id === angelTypeId) {
+                        count++;
+                    }
+                });
+                return count;
+            };
+            ShiftsShowController.prototype.getPercentage = function (now, max) {
+                var relation = now / max * 100;
+                return Math.round(relation);
+            };
+            ShiftsShowController.prototype.deleteShift = function (shift) {
+                var _this = this;
+                this.confirmation.confirm({ message: 'Do you really want to delete the shift <b>' + this.buildLabel(shift) + '</b>' }, function () {
+                    _this.shiftsService.remove(shift).then(function () {
+                        _this.$state.go('shift.calendar');
+                    }, function (error) {
+                        console.log(error);
+                        _this.notificationService.error('Failed to delete ...', 'Errors while trying to delete shift <b>' + _this.buildLabel(shift) + '</b>');
+                    });
+                });
+            };
+            ShiftsShowController.prototype.buildLabel = function (shift) {
+                var title = !_.isUndefined(shift.title) && '' !== shift.title && null !== shift.title ? shift.title : null;
+                return (null === title) ? shift.shiftType.name : title + ' (' + shift.shiftType.name + ')';
+            };
+            return ShiftsShowController;
+        })();
+        shifts.ShiftsShowController = ShiftsShowController;
+        ShiftsShowController.$inject = ['$state', 'ShiftsService', 'NotificationService', 'ConfirmationService'];
+        angular.module('angularShift.shifts').controller('ShiftsShowController', ShiftsShowController);
+    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path='_all.ts' />
+var angularShift;
+(function (angularShift) {
+    var shifts;
+    (function (shifts) {
+        var ShiftTypeEditController = (function () {
+            function ShiftTypeEditController(notificationService, $state, service) {
+                this.notificationService = notificationService;
+                this.$state = $state;
+                this.service = service;
+                this.init();
+            }
+            /**
+             * ToDos
+             * - get shift types list by service
+             * - get locations list by service
+             * - start/end -> form type with day + time
+             * - needed Angeltypes in directive
+             * - save on click
+             */
+            ShiftTypeEditController.prototype.init = function () {
+                var _this = this;
+                var shiftTypeId = this.$state.params.id;
+                this.notificationService.warning('WORK IN PROGRESS', 'This feature isn`t implemented yet. Use <a href="/?p=user_shifts&edit_shift=' + shiftTypeId + '">Link (edit shift type)</a> instead');
+                this.service.getById(shiftTypeId).then(function (shiftType) {
+                    _this.shiftType = shiftType;
+                    _this.notificationService.success('SUCCESS', 'Successfully loaded resource ' + shiftType.name);
+                }, function (error) {
+                    _this.notificationService.error('ERROR', 'Not able to fetch resource');
+                });
+            };
+            return ShiftTypeEditController;
+        })();
+        shifts.ShiftTypeEditController = ShiftTypeEditController;
+        ShiftTypeEditController.$inject = ['NotificationService', '$state', 'ShiftTypesService'];
+        angular.module('angularShift.shifts').controller('ShiftTypeEditController', ShiftTypeEditController);
+    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path='_all.ts' />
+;
+/// <reference path='_all.ts' />
+var angularShift;
+(function (angularShift) {
+    var shiftTypes;
+    (function (shiftTypes) {
+        'use strict';
+        var ShiftTypesService = (function () {
+            function ShiftTypesService(restangular) {
+                this.Resource = restangular.service('shift_types');
+                this.Restangular = restangular;
+            }
+            /**
+             * Return a list of shift.
+             *
+             * The list will be fetched from the local memory when exists, otherwise
+             * an api call is triggered.
+             *
+             * @returns $bluebird
+             */
+            ShiftTypesService.prototype.getAll = function (params) {
+                if (params === void 0) { params = []; }
+                return this.Resource.one().customGET('', params);
+            };
+            /**
+             * Returns a single shift based on its id.
+             *
+             * @param id
+             * @returns $bluebird
+             */
+            ShiftTypesService.prototype.getById = function (id) {
+                return this.Resource.one(id).get();
+            };
+            /**
+             * Will delete a single shift based on its id.
+             *
+             * @param shiftType
+             */
+            ShiftTypesService.prototype.remove = function (shiftType) {
+                return this.Resource.one(shiftType.id).remove();
+            };
+            /**
+             * Will save an existing shift or create a new one.
+             *
+             * @param shiftType
+             */
+            ShiftTypesService.prototype.save = function (shiftType) {
+                var id = shiftType.id;
+                var promise;
+                if (typeof id === 'undefined' || id === null) {
+                    promise = this.Resource.post(shiftType);
+                }
+                else {
+                    promise = this.Resource.getById(id).then(function (originalShift) {
+                        _.assign(originalShift, shiftType);
+                        return originalShift.put();
+                    });
+                }
+                return promise.then(function (data) {
+                    _.assign(data, shiftType);
+                    return data;
+                });
+            };
+            ShiftTypesService.$inject = ['Restangular'];
+            return ShiftTypesService;
+        })();
+        shiftTypes.ShiftTypesService = ShiftTypesService;
+        angular.module('angularShift.shiftTypes').service('ShiftTypesService', ShiftTypesService);
+    })(shiftTypes = angularShift.shiftTypes || (angularShift.shiftTypes = {}));
+})(angularShift || (angularShift = {}));
 /// <reference path='../_all.ts' />
 var angularShift;
 (function (angularShift) {
@@ -967,8 +818,6 @@ var angularShift;
             .service('ConfirmationService', ConfirmationService);
     })(utils = angularShift.utils || (angularShift.utils = {}));
 })(angularShift || (angularShift = {}));
-
-},{}],32:[function(require,module,exports){
 /// <reference path='../_all.ts' />
 var angularShift;
 (function (angularShift) {
@@ -1054,5 +903,95 @@ var angularShift;
         app.service('NotificationService', NotificationService);
     })(utils = angularShift.utils || (angularShift.utils = {}));
 })(angularShift || (angularShift = {}));
-
-},{}]},{},[1,2,3,4,5,6,7,8,11,12,13,14,15,16,17,18,19,20,21,30,31,32,9,10,22,23,24,25,26,27,28,29]);
+/// <reference path='shiftTypes/shiftTypes_app.ts' />
+/// <reference path='shiftEntries/shiftEntries_app.ts' />
+/// <reference path='neededAngels/neededAngels_app.ts' />
+/// <reference path='locations/locations_app.ts' />
+/// <reference path='shifts/shifts_app.ts' />
+/// <reference path='app.ts' />
+// The locations module
+/// <reference path="locations/LocationInterface.ts" />
+/// <reference path="locations/LocationEditController.ts" />
+/// <reference path="locations/LocationsService" />
+// The neededAngels module
+/// <reference path='neededAngels/models/NeededAngelTypeInterface.ts' />
+/// <reference path='neededAngels/models/AngelTypeInterface.ts' />
+// The shiftEntries module
+/// <reference path='shiftEntries/ShiftEntriesService.ts' />
+/// <reference path='shiftEntries/ShiftEntryInterface.ts' />
+// The shifts module
+/// <reference path='shifts/services/ShiftsService.ts' />
+/// <reference path='shifts/models/ShiftInterface.ts' />
+/// <reference path='shifts/services/ShiftEventConverter.ts' />
+/// <reference path='shifts/controllers/ShiftsOnCalendarController' />
+/// <reference path='shifts/controllers/ShiftsEditController' />
+/// <reference path='shifts/controllers/ShiftsShowController' />
+// The shiftTypes module
+/// <reference path="shiftTypes/ShiftTypeEditController" />
+/// <reference path="shiftTypes/ShiftTypeInterface" />
+/// <reference path="shiftTypes/ShiftTypesService" />
+// Utils component
+/// <reference path='utils/ConfirmationService.ts' />
+/// <reference path='utils/NotificationService.ts' />
+// General or application wide stuff
+/// <reference path="../typings/lodash/lodash.d.ts" />
+/// <reference path='../typings/angularjs/angular.d.ts' />
+/// <reference path='../typings/fullCalendar/fullCalendar.d.ts' />
+/// <reference path='../typings/restangular/restangular.d.ts' />
+/// <reference path='../typings/toastr/toastr.d.ts' />
+/// <reference path='../typings/bootstrap/bootstrap.d.ts' />
+/// <reference path='../typings/angular-ui-router/angular-ui-router.d.ts' />
+/// <reference path='../typings/es6-promise/es6-promise.d.ts' />
+/// <reference path='../typings/jquery/jquery.d.ts' />
+/// <reference path='../typings/bootbox/bootbox.d.ts' />
+/// <reference path='../typings/moment/moment.d.ts' />
+/// <reference path="../_all.ts" />
+var angularShift;
+(function (angularShift) {
+    var shifts;
+    (function (shifts) {
+        angular.module('angularShift.shifts')
+            .directive('listFilter', function () {
+            return {
+                'restrict': 'E',
+                'templateUrl': 'partials/shifts/list_filter.html',
+                'scope': {
+                    type: '@'
+                },
+                link: function ($scope, element, attr) {
+                },
+                'controller': 'ListFilterController'
+            };
+        });
+    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
+})(angularShift || (angularShift = {}));
+/// <reference path="../_all.ts" />
+var angularShift;
+(function (angularShift) {
+    var shifts;
+    (function (shifts) {
+        var ListFilterController = (function () {
+            function ListFilterController($scope, locationsService) {
+                this.services = {
+                    'location': null
+                };
+                this.services.location = locationsService;
+                this.$scope = $scope;
+                this.$scope.buttons = [];
+                this.init();
+            }
+            ListFilterController.prototype.init = function () {
+                var _this = this;
+                this.services.location.getAll().then(function (locations) {
+                    _.each(locations, function (location) {
+                        _this.$scope.buttons.push({ check: true, label: location.Name });
+                    });
+                });
+            };
+            return ListFilterController;
+        })();
+        shifts.ListFilterController = ListFilterController;
+        ListFilterController.$inject = ['$scope', 'LocationsService'];
+        angular.module('angularShift.shifts').controller('ListFilterController', ListFilterController);
+    })(shifts = angularShift.shifts || (angularShift.shifts = {}));
+})(angularShift || (angularShift = {}));
