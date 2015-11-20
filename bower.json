@@ -13,7 +13,6 @@
     "bootstrap": "3.3.5",
     "angular-mocks": "1.4.7",
     "lodash": "2.4.x",
-    "lodash-contrib": "241.4.x",
     "restangular": "~1.4.0",
     "angular-ui-calendar": "latest",
     "angular-ui-router": "angular-ui/ui-router#~0.2.15",

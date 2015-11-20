@@ -56,9 +56,6 @@
     "gulp-angular-gettext": "~2.1.0",
     "gulp-order": "~1.1.1"
   },
-  "config": {
-    "browsers": "Firefox"
-  },
   "scripts": {
     "lint": "jshint src/*.js",
     "postinstall": "bower install",
