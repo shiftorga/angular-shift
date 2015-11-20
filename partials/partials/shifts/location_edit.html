@@ -26,7 +26,7 @@
                         <div class="col-md-12"><h4>Needed angels:</h4></div>
                         <div class="col-md-12">
                             <div class="form-group" ng-repeat="neededAngelType in locationEdit.location.neededAngelTypes">
-                                <label for="">{{neededAngelType.angelType.name}}</label>
+                                <label>{{neededAngelType.angelType.name}}</label>
                                 <div class="input-group">
                                     <input id="spinner-type_3" class="form-control" type="text" name="type_3" ng-model="neededAngelType.count">
                                     <div class="input-group-btn">
@@ -52,7 +52,7 @@
                 </div>
 
             </div>
-            <div class="form-group"><label for=""><input class="btn btn-primary" type="submit" name="submit"
+            <div class="form-group"><label><input class="btn btn-primary" type="submit" name="submit"
                                                          value="Save"></label></div>
         </form>
     </div>
