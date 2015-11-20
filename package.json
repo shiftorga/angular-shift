@@ -49,12 +49,13 @@
     "gulp-util": "~3.0.7"
   },
   "devDependencies": {
-    "karma": "~0.12",
-    "karma-jasmine": "~0.2.3",
-    "jscs": "~2.0.0",
-    "gulp-notify": "~2.0.1",
     "gulp-angular-gettext": "~2.1.0",
-    "gulp-order": "~1.1.1"
+    "gulp-notify": "~2.0.1",
+    "gulp-order": "~1.1.1",
+    "gulp-partial-to-script": "^1.0.3",
+    "jscs": "~2.0.0",
+    "karma": "~0.12",
+    "karma-jasmine": "~0.2.3"
   },
   "scripts": {
     "lint": "jshint src/*.js",

@@ -21,7 +21,8 @@
         rename       = require('gulp-rename'),
         karma        = require('karma'),
         karmaParseConfig = require('karma/lib/config').parseConfig,
-        path = require('path'),
+        path         = require('path'),
+        partials     = require('gulp-partial-to-script'),
         paths = {
             src: './src',
             bower: './components',
@@ -30,7 +31,8 @@
         },
         applicationPaths = {
             scss: [],
-            typescripts: ['./src/**/**.ts', './src/**/*.ts' ,'./src/*.ts']
+            typescripts: ['./src/**/**.ts', './src/**/*.ts' ,'./src/*.ts'],
+            partials: ['./partials/partials/**/*.html']
         },
         bowerComponentPaths = {
             scss: [
@@ -86,11 +88,21 @@
         var tsResult = gulp.src(applicationPaths.typescripts)
             .pipe(sourcemaps.init())
             .pipe(ts({out: 'angular.shifts.js'}))
-            .pipe(gulp.dest(paths.dest))
+            .pipe(gulp.dest(paths.dest + '/js'))
             .pipe(sourcemaps.write())
             .pipe(rename('angular.shifts.min.js'))
             .pipe(uglifyjs())
-            .pipe(gulp.dest(paths.dest));
+            .pipe(gulp.dest(paths.dest + '/js'));
+    });
+
+    gulp.task('build-partials', function () {
+        gulp.src(applicationPaths.partials)
+            .pipe(partials({
+                suffix : ".html",
+                ext : ".html"
+            }))
+            .pipe(concat('angular.shifts.html'))
+            .pipe(gulp.dest(paths.dest + '/partials'));
     });
 
     function runKarma(configFilePath, options, cb) {
@@ -172,14 +184,13 @@
             .pipe(sourcemaps.init())
             .pipe(concat("vendors.js"))
             //.pipe(uglifyjs())
-            .pipe(gulp.dest(paths.dest));
+            .pipe(gulp.dest(paths.dest + '/js'));
     });
 
     gulp.task('default', function() {
-        // gulp.start('run');
-        // gulp.watch('./src/scss/**/*.scss', ['css']);
         gulp.watch(['./src/*.ts', './src/**/*.ts', './src/**/**/*.ts'], ['build-scripts']);
+        gulp.watch(['./partials/partials/**/*.html'], ['build-partials'])
     });
 
-    gulp.task('run', ['bower_components']);
+    gulp.task('build', ['build-scripts', 'build-partials', 'components']);
 })();

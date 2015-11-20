@@ -1,3 +1,4 @@
+
 <div class="row" >
     <div class="col-md-12"><h1>Shifts</h1>
         <noscript>&lt;div class="alert alert-info"&gt;This page is much more comfortable with
@@ -42,7 +43,7 @@
 
             <h2>Needed angels</h2>
             <div class="form-group" ng-repeat="neededAngelType in shiftEdit.shift.neededAngelTypes">
-                <label for="">{{neededAngelType.angelType.name}}</label>
+                <label for="spinner-type_3">{{neededAngelType.angelType.name}}</label>
                 <div class="input-group">
                     <input id="spinner-type_3" class="form-control" type="text" name="type_3" ng-model="neededAngelType.count">
                     <div class="input-group-btn">
@@ -64,7 +65,7 @@
                 </script>
             </div>
             <div class="form-group">
-                <label for="">
+                <label>
                     <input class="btn btn-primary" type="submit" name="submit"value="Save">
                 </label>
             </div>

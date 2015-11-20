@@ -18,6 +18,269 @@
 
 <script src="../dist/vendors.js" type="application/javascript"></script>
 <script src="../dist/angular.shifts.js" type="application/javascript"></script>
+<script type="text/template" id="shifts/calendar.html">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Filter</h1>
+            </div>
+            <div class="col-md-2">
+                <list-filter type="location"></list-filter>
+            </div>
+        </div>
+    </div>
+    <div ui-calendar="uiConfig.calendar" ng-model="shiftsOnCalendar.eventSources"></div>
+</script>
+<script type="text/template" id="shifts/edit.html"><div class="row" >
+<div class="col-md-12"><h1>Shifts</h1>
+    <noscript>&lt;div class="alert alert-info"&gt;This page is much more comfortable with
+        javascript.&lt;/div&gt;</noscript>
+    <form role="form" action="" enctype="multipart/form-data" method="post">
+        <div class="form-group">
+            <label for="form_shifttype_id">Shifttype</label>
+            <select class="form-control" id="form_shifttype_id" name="shifttype_id">
+                <option value="4" selected="selected">Schichttyp1</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="form_title">Title</label>
+            <input class="form-control" id="form_title" type="text" name="title" ng-model="shiftEdit.shift.title">
+        </div>
+        <div class="form-group">
+            <label for="form_rid">Location:</label>
+            <select class="form-control" id="form_rid" name="rid">
+                <option value="23" selected="selected">AKJSLJFDS</option>
+                <option value="16">Bike-shed Green</option>
+                <option value="15">Bike-shed Red</option>
+                <option value="18">Bike-shed Yellow</option>
+                <option value="17">HARcade (valkennest)</option>
+                <option value="20">Hauptbahnhof - Zeltstadt</option>
+                <option value="13">Monty Hall</option>
+                <option value="22">München - Theresienwiese</option>
+                <option value="24">SDFD</option>
+                <option value="6">Test</option>
+                <option value="12">The Birthday Tent</option>
+                <option value="14">The Two Envelopes Tent</option>
+                <option value="19">Village BSD</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="form_start">Start:</label>
+            <input class="form-control" id="form_start" type="text" name="start" ng-model="shiftEdit.shift.start">
+        </div>
+        <div class="form-group">
+            <label for="form_end">End:</label>
+            <input class="form-control" id="form_end" type="text" name="end" ng-model="shiftEdit.shift.end">
+        </div>
+
+        <h2>Needed angels</h2>
+        <div class="form-group" ng-repeat="neededAngelType in shiftEdit.shift.neededAngelTypes">
+            <label for="">{{neededAngelType.angelType.name}}</label>
+            <div class="input-group">
+                <input id="spinner-type_3" class="form-control" type="text" name="type_3" ng-model="neededAngelType.count">
+                <div class="input-group-btn">
+                    <button id="spinner-type_3-down" class="btn btn-default" type="button">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                    <button id="spinner-type_3-up" class="btn btn-default" type="button">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $("#spinner-type_3-down").click(function (e) {
+                    $("#spinner-type_3").val(parseInt($("#spinner-type_3").val()) - 1);
+                });
+                $("#spinner-type_3-up").click(function (e) {
+                    $("#spinner-type_3").val(parseInt($("#spinner-type_3").val()) + 1);
+                });
+</script>
+</div>
+<div class="form-group">
+    <label for="">
+        <input class="btn btn-primary" type="submit" name="submit"value="Save">
+    </label>
+</div>
+</form>
+</div>
+</div>
+</script>
+<script type="text/template" id="shifts/list_filter.html"><h4 style="margin-top: 41px;">{{ type| uppercase}}</h4>
+</script>
+<script type="text/template" id="shifts/location_edit.html"><div class="row">
+<div class="col-md-12"><h1>Locations</h1>
+
+    <div class="form-group">
+        <div class="btn-group"><a href="?p=admin_rooms" class="btn btn-default back">back</a></div>
+    </div>
+    <form role="form" action="" enctype="multipart/form-data" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Name</label>
+                    <input class="form-control" id="form_name" type="text" name="name" ng-model="locationEdit.location.Name">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="public" name="public" ng-model="locationEdit.location.show"> Public
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="form_number">Room number</label>
+                    <input class="form-control" id="form_number" type="text" name="number" ng-model="locationEdit.location.Number"></div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12"><h4>Needed angels:</h4></div>
+                    <div class="col-md-12">
+                        <div class="form-group" ng-repeat="neededAngelType in locationEdit.location.neededAngelTypes">
+                            <label for="">{{neededAngelType.angelType.name}}</label>
+                            <div class="input-group">
+                                <input id="spinner-type_3" class="form-control" type="text" name="type_3" ng-model="neededAngelType.count">
+                                <div class="input-group-btn">
+                                    <button id="spinner-type_3-down" class="btn btn-default" type="button">
+                                        <span class="glyphicon glyphicon-minus"></span>
+                                    </button>
+                                    <button id="spinner-type_3-up" class="btn btn-default" type="button">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                $("#spinner-type_3-down").click(function (e) {
+                                    $("#spinner-type_3").val(parseInt($("#spinner-type_3").val()) - 1);
+                                });
+                                $("#spinner-type_3-up").click(function (e) {
+                                    $("#spinner-type_3").val(parseInt($("#spinner-type_3").val()) + 1);
+                                });
+</script>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="form-group"><label for=""><input class="btn btn-primary" type="submit" name="submit"
+                                             value="Save"></label></div>
+</form>
+</div>
+</div>
+</script>
+<script type="text/template" id="shifts/shift_type_edit.html"><div class="row">
+        <div class="col-md-12"><h1>Create shift type</h1>
+
+<div class="form-group">
+        <div class="btn-group">
+        <a ui-sref="shiftTypes" class="btn btn-default back">Shifttypes</a>
+        </div>
+        </div>
+        <form role="form" action="" enctype="multipart/form-data" method="post">
+        <div class="form-group"><label for="form_name">Name</label>
+        <input class="form-control" id="form_name" type="text" name="name" ng-model="shiftTypeEdit.shiftType.name">
+        </div>
+        <div class="form-group">
+        <label for="form_angeltype_id">Angeltype</label>
+        <select class="form-control" id="form_angeltype_id" name="angeltype_id" ng-model="shiftTypeEdit.shiftType.angelType">
+        <option value="" selected="selected">All</option>
+        <option value="3">Angel-Type</option>
+        </select>
+        </div>
+        <div class="form-group">
+        <label for="form_description">Description</label>
+        <textarea
+    class="form-control"
+id="form_description"
+name="description" ng-model="shiftTypeEdit.shiftType.description">
+
+        </textarea>
+        </div>
+        <span class="help-block">
+        <span class="glyphicon glyphicon-info-sign"></span> Please use markdown for the description.</span>
+
+<div class="form-group"><label for="">
+        <input class="btn btn-primary" type="submit" name="submit" value="Save"></label>
+        </div>
+        </form>
+        </div>
+        </div>
+</script>
+<script type="text/template" id="shifts/shifts.html"><div class="container" ui-view="edit"></div>
+<div class="container" ui-view="main"></div>
+</script>
+<script type="text/template" id="shifts/show.html"><div class="row">
+<div class="col-md-12">
+    <h1>{{ shiftShow.shift.shiftType.name }}
+        <small class="moment-countdown" data-timestamp="{{ shiftShow.shift.start }}"></small>
+
+    </h1>
+    <div class="form-group">
+        <div class="btn-group">
+            <button class="btn btn-default" ui-sref="shifts.edit({id: shiftShow.shift.SID})">
+                <span class="glyphicon glyphicon-pencil"></span>&nbsp;edit
+            </button>
+            <button class="btn btn-default" ng-click="shiftShow.deleteShift(shiftShow.shift)">
+                <span class="glyphicon glyphicon-trash"></span>&nbsp;delete
+            </button>
+            <button class="btn btn-default" ui-sref="shiftType.edit({id: shiftShow.shift.shiftType.id})">
+                {{ shiftShow.shift.shiftType.name }}
+            </button>
+            <button class="btn btn-default" ui-sref="locations.edit({id: shiftShow.shift.location.id})">
+                <span class="glyphicon glyphicon-map-marker"></span>&nbsp;{{ shiftShow.shift.location.name }}
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3 col-xs-6"><h4>Title</h4>
+            <p class="lead">{{ shiftShow.shift.title}}</p></div>
+        <div class="col-sm-3 col-xs-6"><h4>Start</h4>
+            <p class="lead">
+                <span class="glyphicon glyphicon-calendar"></span> {{ shiftShow.dateValues.dateStart }}<br>
+                <span class="glyphicon glyphicon-time"></span> {{ shiftShow.dateValues.timeStart }}
+            </p></div>
+        <div class="col-sm-3 col-xs-6"><h4>End</h4>
+            <p class="lead">
+                <span class="glyphicon glyphicon-calendar"></span> {{ shiftShow.dateValues.dateEnd }}<br>
+                <span class="glyphicon glyphicon-time"></span> {{ shiftShow.dateValues.timeEnd }}
+            </p></div>
+        <div class="col-sm-3 col-xs-6"><h4>Location</h4>
+            <p class="lead"><span class="glyphicon glyphicon-map-marker"></span> {{ shiftShow.shift.location.name }}</p></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6"><h2>Needed angels</h2>
+            <div class="list-group">
+                <div class="list-group-item" ng-repeat="type in shiftShow.shift.neededAngelTypes">
+                    <div class="pull-right">
+                        <a href="?p=user_shifts&amp;shift_id=439&amp;type_id=3" class="btn btn-default">Sign up</a>
+                    </div>
+                    <h3><a href="?p=angeltypes&amp;action=view&amp;angeltype_id=3">{{ type.angelType.name }}</a></h3>
+                    <div
+                            class="progress"
+                            ng-init="min = shiftShow.countShiftEntriesForAngelType(shiftShow.shift, type.id); percentage = shiftShow.getPercentage(min, type.count)"
+                    >
+                        <div
+                                class="progress-bar {{ (percentage >= 50 ? 'progress-bar-success' : 'progress-bar-danger') }}"
+                                role="progressbar"
+                                aria-valuenow="{{ min }}"
+                                aria-valuemin="0"
+                                aria-valuemax="{{ type.count }}"
+                                style="width: {{ percentage }}%">
+                            {{ min }} / {{ type.count }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6"><h2>Description</h2>
+        </div>
+    </div>
+    <span class="glyphicon glyphicon-plus"></span>
+    created at 2015-10-06 07:19 by
+    <a class="" href="?p=users&amp;action=view&amp;user_id=1">
+        <span class="icon-icon_angel"></span> admin
+    </a>
+</div>
+</div>
+</script>
 
 </body>
 </html>
